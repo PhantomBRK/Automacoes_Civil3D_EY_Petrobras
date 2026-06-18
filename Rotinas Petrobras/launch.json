@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Build AutomacoesCivil3D (Debug x64)",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": ["build", "AutomacoesCivil3D.csproj", "-c", "Debug", "-p:Platform=x64"],
+      "port": 0
+    },
+    {
+      "name": "Build AutomacoesCivil3D (Release x64)",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": ["build", "AutomacoesCivil3D.csproj", "-c", "Release", "-p:Platform=x64"],
+      "port": 0
+    }
+  ]
+}

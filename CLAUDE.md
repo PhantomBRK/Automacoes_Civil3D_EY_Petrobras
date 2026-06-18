@@ -4,7 +4,7 @@ Plugin AutoCAD Civil 3D 2026 em C# (.NET 8). Não é projeto cross-platform, nã
 
 ## Stack
 
-- **TFM:** `net8.0-windows7.0`. Plataforma alvo: **x64** (também compila ARM64/x86, mas debug real é x64).
+- **TFM:** `net8.0-windows8.0` (`SupportedOSPlatformVersion` 8.0). Plataforma alvo: **x64** (também compila ARM64/x86, mas debug real é x64). Output: `bin\x64\<Config>\net8.0-windows8.0`.
 - **WPF + WinForms** habilitados no mesmo csproj (`UseWPF`, `UseWindowsForms`).
 - **Autodesk Managed API** (carregadas como `<Reference>` apontando para `Program Files\Autodesk\AutoCAD 2026\`):
   - Core: `accoremgd`, `acdbmgd`, `acmgd`, `acdbmgdbrep`, `AdWindows`
@@ -17,7 +17,7 @@ Plugin AutoCAD Civil 3D 2026 em C# (.NET 8). Não é projeto cross-platform, nã
   - IFC: `Xbim.Common`, `Xbim.Essentials`, `Xbim.Ifc`, `Xbim.Ifc2x3/4/4x3`, `Xbim.IO.Esent`, `Xbim.IO.MemoryModel` (todos `6.0.565`)
   - Excel: `ClosedXML 0.105.0`, `EPPlus 8.5.0`, `ExcelDataReader 3.8.0`
   - Outros: `HtmlAgilityPack`, `ICSharpCode.Decompiler`, `Microsoft.Extensions.Options 8.0.2`
-- **Build:** `dotnet build` na raiz (csproj principal: `AutomacoesCivil3D.csproj`, sln: `RotinasPetrobras.sln`).
+- **Build:** **MSBuild do Visual Studio** (csproj principal: `Rotinas Petrobras\AutomacoesCivil3D.csproj`, sln: `Rotinas Petrobras\RotinasPetrobras.sln`). **Não usar `dotnet build`** — o csproj tem `<COMReference>` que precisa da task `ResolveComReference` do .NET Framework MSBuild; o `dotnet` CLI falha com `error MSB4803`.
 - **Deploy automático:** target `DeployAutomacoesPetrobrasBundle` (em `AutomacoesCivil3D.csproj`) copia o output para `%AppData%\Autodesk\ApplicationPlugins\AutomacoesPetrobras.bundle\Contents\` após cada build. Não há passo manual.
 
 ## Layout
@@ -70,10 +70,19 @@ Existem múltiplos `.csproj` legados (`*-Copia.csproj`, `*-DESKTOP-MAE3FQ9.cspro
 
 ## Comandos úteis
 
-```bash
-dotnet build AutomacoesCivil3D.csproj -c Debug -p:Platform=x64
-dotnet build AutomacoesCivil3D.csproj -c Release -p:Platform=x64
+```powershell
+# Build Debug x64
+& "C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe" `
+    "Rotinas Petrobras\AutomacoesCivil3D.csproj" `
+    -p:Configuration=Debug -p:Platform=x64 -restore -nologo -v:quiet
+
+# Build Release x64
+& "C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe" `
+    "Rotinas Petrobras\AutomacoesCivil3D.csproj" `
+    -p:Configuration=Release -p:Platform=x64 -restore -nologo -v:quiet
 ```
+
+`dotnet build` **não funciona** — falha com `error MSB4803` na task `ResolveComReference` (COM interop precisa do MSBuild full-framework).
 
 Após build, o plugin já está deployado em `%AppData%\Autodesk\ApplicationPlugins\AutomacoesPetrobras.bundle\`. Reabrir o Civil 3D para recarregar.
 

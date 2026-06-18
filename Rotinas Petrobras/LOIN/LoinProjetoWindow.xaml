@@ -1,0 +1,165 @@
+<Window x:Class="AutomacoesCivil3D.LoinProjetoWindow"
+        x:ClassModifier="internal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Dados de Projeto — Pset_A"
+        Width="640" Height="600"
+        MinWidth="500" MinHeight="520"
+        WindowStartupLocation="CenterScreen"
+        Background="#F2F5F8"
+        FontFamily="Bahnschrift">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="HeroBrush"       Color="#10324B"/>
+        <SolidColorBrush x:Key="AccentBrush"     Color="#147A8A"/>
+        <SolidColorBrush x:Key="SurfaceBrush"    Color="#FCFDFE"/>
+        <SolidColorBrush x:Key="SoftBorderBrush" Color="#D4DEE7"/>
+        <SolidColorBrush x:Key="TextBrush"       Color="#173042"/>
+        <SolidColorBrush x:Key="MutedBrush"      Color="#5F7384"/>
+
+        <Style x:Key="LabelTxt" TargetType="TextBlock">
+            <Setter Property="FontSize"   Value="12"/>
+            <Setter Property="Foreground" Value="{StaticResource MutedBrush}"/>
+            <Setter Property="Margin"     Value="0,8,0,4"/>
+        </Style>
+
+        <Style x:Key="InputBox" TargetType="TextBox">
+            <Setter Property="Height"             Value="32"/>
+            <Setter Property="Padding"            Value="10,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize"           Value="13"/>
+            <Setter Property="Foreground"         Value="{StaticResource TextBrush}"/>
+            <Setter Property="Background"         Value="{StaticResource SurfaceBrush}"/>
+            <Setter Property="BorderBrush"        Value="{StaticResource SoftBorderBrush}"/>
+            <Setter Property="BorderThickness"    Value="1"/>
+        </Style>
+
+        <Style x:Key="PrimaryBtn" TargetType="Button">
+            <Setter Property="Foreground"      Value="White"/>
+            <Setter Property="Background"      Value="{StaticResource AccentBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding"         Value="16,9"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="FontWeight"      Value="SemiBold"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+        </Style>
+
+        <Style x:Key="SecondaryBtn" TargetType="Button" BasedOn="{StaticResource PrimaryBtn}">
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+            <Setter Property="Background" Value="#E6EDF2"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="64"/>
+        </Grid.RowDefinitions>
+
+        <!-- HEADER -->
+        <Border Grid.Row="0" Background="{StaticResource HeroBrush}" Padding="24,0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Border Width="38" Height="38" CornerRadius="9" Background="#1A8F9F" Margin="0,0,14,0">
+                    <TextBlock Text="A" Foreground="White" FontWeight="Bold" FontSize="20"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Dados de Projeto" Foreground="White" FontSize="18" FontWeight="SemiBold"/>
+                    <TextBlock Text="Aplicados em Pset_A de todos os sólidos exportados pelo LOIN"
+                               Foreground="#9BBFD6" FontSize="12"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- BODY -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="24,12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="14"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Linha 1 -->
+                <StackPanel Grid.Row="0" Grid.Column="0">
+                    <TextBlock Text="Nome do Projeto" Style="{StaticResource LabelTxt}"/>
+                    <TextBox Style="{StaticResource InputBox}"
+                             Text="{Binding Projeto.NomeProjeto, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="2">
+                    <TextBlock Text="Nome Projeto (alternativo)" Style="{StaticResource LabelTxt}"/>
+                    <TextBox Style="{StaticResource InputBox}"
+                             Text="{Binding Projeto.NomeProjetoAlt, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+
+                <!-- Linha 2 -->
+                <StackPanel Grid.Row="1" Grid.Column="0">
+                    <TextBlock Text="Contratante" Style="{StaticResource LabelTxt}"/>
+                    <TextBox Style="{StaticResource InputBox}"
+                             Text="{Binding Projeto.Contratante, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="2">
+                    <TextBlock Text="Autor" Style="{StaticResource LabelTxt}"/>
+                    <TextBox Style="{StaticResource InputBox}"
+                             Text="{Binding Projeto.Autor, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+
+                <!-- Linha 3 -->
+                <StackPanel Grid.Row="2" Grid.Column="0">
+                    <TextBlock Text="Data" Style="{StaticResource LabelTxt}"/>
+                    <TextBox Style="{StaticResource InputBox}"
+                             Text="{Binding Projeto.Data, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Grid.Column="2">
+                    <TextBlock Text="Disciplina" Style="{StaticResource LabelTxt}"/>
+                    <TextBox Style="{StaticResource InputBox}"
+                             Text="{Binding Projeto.Disciplina, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+
+                <!-- Linha 4 -->
+                <StackPanel Grid.Row="3" Grid.Column="0">
+                    <TextBlock Text="Fase de Projeto" Style="{StaticResource LabelTxt}"/>
+                    <TextBox Style="{StaticResource InputBox}"
+                             Text="{Binding Projeto.FaseProjeto, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="3" Grid.Column="2">
+                    <TextBlock Text="Localização" Style="{StaticResource LabelTxt}"/>
+                    <TextBox Style="{StaticResource InputBox}"
+                             Text="{Binding Projeto.Localizacao, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+
+                <!-- Linha 5 -->
+                <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3">
+                    <TextBlock Text="Sistema de Coordenada (ex.: SIRGAS 2000 / UTM zone 23S)" Style="{StaticResource LabelTxt}"/>
+                    <TextBox Style="{StaticResource InputBox}"
+                             Text="{Binding Projeto.SistemaCoordenada, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+
+        <!-- FOOTER -->
+        <Border Grid.Row="2" Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource SoftBorderBrush}" BorderThickness="0,1,0,0">
+            <Grid Margin="20,0">
+                <TextBlock Text="{Binding CaminhoConfigExibido}"
+                           Foreground="{StaticResource MutedBrush}" FontSize="11"
+                           HorizontalAlignment="Left" VerticalAlignment="Center"
+                           TextTrimming="CharacterEllipsis" MaxWidth="380"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Button Content="Cancelar" Style="{StaticResource SecondaryBtn}"
+                            Margin="0,0,10,0" Click="Cancelar_Click"/>
+                    <Button Content="Salvar Dados do Projeto" Style="{StaticResource PrimaryBtn}"
+                            Click="Salvar_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

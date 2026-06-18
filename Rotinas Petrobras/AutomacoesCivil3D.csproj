@@ -1,0 +1,273 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PlatformTarget>x64</PlatformTarget>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <Platforms>AnyCPU;x64;ARM64;x86</Platforms>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyName>AutomacoesCivil3D1</AssemblyName>
+    <UseWPF>true</UseWPF>
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <SupportedOSPlatformVersion>8.0</SupportedOSPlatformVersion>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <PetrobrasBundleDir>$(AppData)\Autodesk\ApplicationPlugins\AutomacoesPetrobras.bundle\Contents\</PetrobrasBundleDir>
+    <AcadDir Condition="'$(AcadDir)' == ''">C:\Program Files\Autodesk\AutoCAD 2026</AcadDir>
+    <CivilDir>$(AcadDir)\C3D</CivilDir>
+    <MapDir>$(AcadDir)\Map</MapDir>
+    <SignAssembly>True</SignAssembly>
+    <PackageId>$(AssemblyName)</PackageId>
+    <AssemblyTitle>AutomacoesCivil3D1</AssemblyTitle>
+    <RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))1</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>True</Optimize>
+    <DebugType>embedded</DebugType>
+    <WarningLevel>1</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <Optimize>True</Optimize>
+    <DebugType>embedded</DebugType>
+    <WarningLevel>1</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <Optimize>True</Optimize>
+    <DebugType>embedded</DebugType>
+    <WarningLevel>1</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Optimize>True</Optimize>
+    <DebugType>embedded</DebugType>
+    <WarningLevel>1</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>embedded</DebugType>
+    <WarningLevel>1</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <DebugType>embedded</DebugType>
+    <WarningLevel>1</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <DebugType>embedded</DebugType>
+    <WarningLevel>1</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DebugType>embedded</DebugType>
+    <WarningLevel>1</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Resources\**" />
+    <EmbeddedResource Remove="Resources\**" />
+    <None Remove="Resources\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Automacoes_Solidos\SolidosSyncCruzetaCanaletaHelpers.cs" />
+    <Compile Remove="InterfaceRotinaCriaPV.cs" />
+    <Compile Remove="InterfaceRotinaCriaPV.Designer.cs" />
+    <Compile Remove="EXTRAIR_SOLIDOS_CORREDORES\ExportacaoSolidosCorredoresModels-ENG_GLEISON.cs" />
+    <Compile Remove="EXTRAIR_SOLIDOS_CORREDORES\ExportacaoSolidosCorredoresService-ENG_GLEISON.cs" />
+    <Compile Remove="IFC\IfcSolidosDrainageBinder-ENG_GLEISON.cs" />
+    <Compile Remove="IFC\IfcInfraConfigEditorWindow.xaml-ENG_GLEISON.cs" />
+    <Compile Remove="Rotinas_PropertySets\PropertySets2.1-ENG_GLEISON.cs" />
+    <Page Remove="EXTRAIR_SOLIDOS_CORREDORES\ExportacaoSolidosCorredoresWindow-ENG_GLEISON.xaml" />
+    <None Remove="EXTRAIR_SOLIDOS_CORREDORES\ExportacaoSolidosCorredoresWindow-ENG_GLEISON.xaml" />
+    <Compile Remove="PastaSolidosCorredores\COPIARCORREDOR%281%29.cs" />
+    <Compile Remove="PastaSolidosCorredores\COPIARCORREDOR.cs" />
+    <Compile Remove="EXTRAIR_SOLIDOS_CORREDORES\COPIARCORREDOR.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="InterfaceRotinaCriaPV.aa.resx" />
+    <EmbeddedResource Remove="InterfaceRotinaCriaPV.pt-BR.resx" />
+    <EmbeddedResource Remove="InterfaceRotinaCriaPV.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="App.config" />
+    <None Remove="RotinasEstruturasDrenagem" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AXDBLib">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>0</VersionMinor>
+      <VersionMajor>1</VersionMajor>
+      <Guid>0ea72311-df28-4318-a51b-92d7fc7df50b</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="COMSVCSLib">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>0</VersionMinor>
+      <VersionMajor>1</VersionMajor>
+      <Guid>2a005c00-a5de-11cf-9e66-00aa00a3f464</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="SystemMonitor">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>7</VersionMinor>
+      <VersionMajor>3</VersionMajor>
+      <Guid>1b773e42-2509-11cf-942f-008029004347</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="WMLSS">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>0</VersionMinor>
+      <VersionMajor>1</VersionMajor>
+      <Guid>c21e9ce5-b317-463b-a1b1-b5e36eed59d0</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="AutocadMAP">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>2</VersionMinor>
+      <VersionMajor>1</VersionMajor>
+      <Guid>ae1c126e-d4a2-4e92-b6d5-6e5fbd9f1038</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="accoremgd">
+      <HintPath>$(AcadDir)\accoremgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Acdbmgd">
+      <HintPath>$(AcadDir)\acdbmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acdbmgdbrep">
+      <HintPath>$(AcadDir)\acdbmgdbrep.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Acmgd">
+      <HintPath>$(AcadDir)\acmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AdWindows">
+      <HintPath>$(AcadDir)\AdWindows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AecBaseMgd">
+      <HintPath>$(AcadDir)\ACA\AecBaseMgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AeccDbMgd">
+      <HintPath>$(CivilDir)\AeccDbMgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AeccDynamo">
+      <HintPath>$(CivilDir)\AeccDynamo.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AecPropDataMgd">
+      <HintPath>$(AcadDir)\ACA\AecPropDataMgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Autodesk.AECC.Interop.Roadway">
+      <HintPath>$(CivilDir)\Autodesk.AECC.Interop.Roadway.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Autodesk.Gis.GisPlatformHelper">
+      <HintPath>$(MapDir)\Autodesk.Gis.GisPlatformHelper.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Autodesk.Gis.Map.CoordinateSystem.Commands">
+      <HintPath>$(MapDir)\Autodesk.Gis.Map.CoordinateSystem.Commands.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Autodesk.Gis.Map.Shared">
+      <HintPath>$(MapDir)\Autodesk.Gis.Map.Shared.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="HtmlEditor">
+      <HintPath>..\..\..\..\..\AppData\Roaming\Autodesk\ApplicationPlugins\SOLIDOS.bundle\dotnet_8\HtmlEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel">
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files\Microsoft Office\root\Office16\ADDINS\PowerPivot Excel Add-in\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OSGeo.FDO">
+      <HintPath>$(MapDir)\bin\FDO\OSGeo.FDO.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OSGeo.MapGuide.Foundation">
+      <HintPath>$(MapDir)\bin\GisPlatform\OSGeo.MapGuide.Foundation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OSGeo.MapGuide.Geometry">
+      <HintPath>$(MapDir)\bin\GisPlatform\OSGeo.MapGuide.Geometry.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OSGeo.MapGuide.PlatformBase">
+      <HintPath>$(MapDir)\bin\GisPlatform\OSGeo.MapGuide.PlatformBase.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SOLIDOS_2025">
+      <HintPath>..\..\..\..\..\AppData\Roaming\Autodesk\ApplicationPlugins\SOLIDOS.bundle\dotnet_8\SOLIDOS_2025.dll</HintPath>
+    </Reference>
+    <Reference Include="tbn2net">
+      <HintPath>..\..\..\..\..\AppData\Roaming\Autodesk\ApplicationPlugins\SOLIDOS.bundle\dotnet_8\tbn2net.dll</HintPath>
+    </Reference>
+    <Reference Include="TBN2NET_LISP_2025">
+      <HintPath>..\..\..\..\..\AppData\Roaming\Autodesk\ApplicationPlugins\SOLIDOS.bundle\dotnet_8\TBN2NET_LISP_2025.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AeccDaylightBasin.png" />
+    <None Include="Resources\AxOffNoFocus.png" />
+    <None Include="Resources\BandsUI_bttm.png" />
+    <None Include="Resources\LOGO EY_fundo transparente.png" />
+    <None Include="Resources\Logo_P.AVELAR-2024-fundo branco.jpg" />
+    <None Include="Resources\Logo_P.AVELAR-2024-fundo branco1.jpg" />
+    <None Include="Resources\RSCSS_Spiral_In.png" />
+    <None Include="Resources\WhatsApp Image 2024-06-05 at 12.23.03.jpeg" />
+    <None Include="Resources\WhatsApp Image 2024-11-23 at 02.00.12.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" />
+    <PackageReference Include="CloseXmlSourceGenerator" />
+    <PackageReference Include="EPPlus">
+      <GeneratePathProperty>True</GeneratePathProperty>
+    </PackageReference>
+    <PackageReference Include="EPPlus.Interfaces">
+      <GeneratePathProperty>True</GeneratePathProperty>
+      <TreatAsUsed>true</TreatAsUsed>
+    </PackageReference>
+    <PackageReference Include="ExcelDataReader" />
+    <PackageReference Include="ExcelDataReader.DataSet" />
+    <PackageReference Include="HtmlAgilityPack">
+      <GeneratePathProperty>False</GeneratePathProperty>
+    </PackageReference>
+    <PackageReference Include="ICSharpCode.Decompiler" />
+    <PackageReference Include="Microsoft.Extensions.Options" />
+    <PackageReference Include="Microsoft.VisualBasic" />
+    <PackageReference Include="Xbim.Common" />
+    <PackageReference Include="Xbim.Essentials" />
+    <PackageReference Include="Xbim.Ifc">
+      <GeneratePathProperty>True</GeneratePathProperty>
+    </PackageReference>
+    <PackageReference Include="Xbim.Ifc2x3" />
+    <PackageReference Include="Xbim.Ifc4" />
+    <PackageReference Include="Xbim.Ifc4x3" />
+    <PackageReference Include="Xbim.IO.Esent" />
+    <PackageReference Include="Xbim.IO.MemoryModel" />
+  </ItemGroup>
+  <Target Name="DeployAutomacoesPetrobrasBundle" AfterTargets="Build" Condition="Exists('$(PetrobrasBundleDir)')">
+    <ItemGroup>
+      <BundleFiles Include="$(TargetDir)*" Exclude="$(TargetDir)*.pdb;$(TargetDir)*.xml;$(TargetDir)acad*.err" />
+    </ItemGroup>
+    <MakeDir Directories="$(PetrobrasBundleDir)" />
+    <Copy SourceFiles="@(BundleFiles)" DestinationFiles="@(BundleFiles->'$(PetrobrasBundleDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" ContinueOnError="WarnAndContinue" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFiles="$(PetrobrasBundleDir)AutomacoesCivil3D.dll" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="true" ContinueOnError="WarnAndContinue" />
+    <Copy SourceFiles="$(TargetDir)$(TargetName).deps.json" DestinationFiles="$(PetrobrasBundleDir)AutomacoesCivil3D.deps.json" Condition="Exists('$(TargetDir)$(TargetName).deps.json')" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="true" ContinueOnError="WarnAndContinue" />
+    <Copy SourceFiles="$(TargetDir)Microsoft.Extensions.Options.dll" DestinationFiles="$(PetrobrasBundleDir)Microsoft.Extensions.Options.dll" Condition="Exists('$(TargetDir)Microsoft.Extensions.Options.dll')" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="true" ContinueOnError="WarnAndContinue" />
+  </Target>
+</Project>

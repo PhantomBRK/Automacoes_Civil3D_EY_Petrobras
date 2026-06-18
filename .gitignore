@@ -1,0 +1,63 @@
+# =====================================================================
+#  .gitignore — Plugin AutoCAD Civil 3D 2026 (Automacoes Civil3D)
+#  Mantém no repositório apenas o código-fonte do projeto ativo.
+#  Exclui binários de terceiros (Autodesk/Xbim/EPPlus...), artefatos de
+#  build, instaladores, CAD e backups de sincronização entre máquinas.
+# =====================================================================
+
+# --- Saída de build / IDE -------------------------------------------
+[Bb]in/
+[Oo]bj/
+bin_codex/
+.vs/
+*.user
+*.suo
+*.cache
+*.ide/
+*.VC.db
+
+# --- Estado local do Claude Code (worktrees, sessões) em qualquer nível
+.claude/
+settings.local.json
+
+# --- DLLs / binários de terceiros e símbolos ------------------------
+# (AutoCAD/Civil3D Managed API, Xbim, EPPlus, ClosedXML, etc. — nunca
+#  versionar: são referências locais do Program Files / pacotes NuGet)
+*.dll
+*.pdb
+*.exe
+*.so
+*.dylib
+
+# --- Instaladores / pacotes / arquivos compactados ------------------
+*.zip
+*.rar
+*.7z
+*.msi
+Installer.zip
+
+# --- Arquivos CAD / dados pesados -----------------------------------
+*.dwg
+*.dxf
+*.dwl
+*.dwl2
+*.bak
+*.sv$
+
+# --- Backups de sincronização entre máquinas ------------------------
+# (CLAUDE.md: variantes -Copia / -DESKTOP- / -ENG_GLEISON são backups)
+* - Copia*
+*-DESKTOP-*
+*ENG_GLEISON*
+.bak_*/
+
+# --- Logs / temporários ---------------------------------------------
+*.log
+*.tmp
+~$*
+
+# --- SO -------------------------------------------------------------
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/

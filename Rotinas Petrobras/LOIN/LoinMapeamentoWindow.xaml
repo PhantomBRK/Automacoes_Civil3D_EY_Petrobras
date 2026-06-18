@@ -1,0 +1,491 @@
+<Window x:Class="AutomacoesCivil3D.LoinMapeamentoWindow"
+        x:ClassModifier="internal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Mapeamento LOIN — Camadas / Code Styles"
+        Width="1420" Height="860"
+        MinWidth="1100" MinHeight="640"
+        WindowStartupLocation="CenterScreen"
+        Background="#F2F5F8"
+        FontFamily="Bahnschrift">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="HeroBrush"       Color="#10324B"/>
+        <SolidColorBrush x:Key="AccentBrush"     Color="#147A8A"/>
+        <SolidColorBrush x:Key="SurfaceBrush"    Color="#FCFDFE"/>
+        <SolidColorBrush x:Key="SoftBorderBrush" Color="#D4DEE7"/>
+        <SolidColorBrush x:Key="TextBrush"       Color="#173042"/>
+        <SolidColorBrush x:Key="MutedBrush"      Color="#5F7384"/>
+
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background"      Value="{StaticResource SurfaceBrush}"/>
+            <Setter Property="CornerRadius"    Value="18"/>
+            <Setter Property="Padding"         Value="18"/>
+            <Setter Property="BorderBrush"     Value="{StaticResource SoftBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style x:Key="PrimaryBtn" TargetType="Button">
+            <Setter Property="Foreground"      Value="White"/>
+            <Setter Property="Background"      Value="{StaticResource AccentBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding"         Value="16,9"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="FontWeight"      Value="SemiBold"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+        </Style>
+
+        <Style x:Key="SecondaryBtn" TargetType="Button" BasedOn="{StaticResource PrimaryBtn}">
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+            <Setter Property="Background" Value="#E6EDF2"/>
+        </Style>
+
+        <Style x:Key="DangerBtn" TargetType="Button" BasedOn="{StaticResource PrimaryBtn}">
+            <Setter Property="Background" Value="#C62828"/>
+        </Style>
+
+        <Style x:Key="LabelTxt" TargetType="TextBlock">
+            <Setter Property="FontSize"   Value="12"/>
+            <Setter Property="Foreground" Value="{StaticResource MutedBrush}"/>
+            <Setter Property="Margin"     Value="0,0,0,4"/>
+        </Style>
+
+        <!-- DataGrid global -->
+        <Style TargetType="DataGrid">
+            <Setter Property="AutoGenerateColumns"      Value="False"/>
+            <Setter Property="CanUserAddRows"           Value="False"/>
+            <Setter Property="CanUserDeleteRows"        Value="False"/>
+            <Setter Property="CanUserReorderColumns"    Value="False"/>
+            <Setter Property="GridLinesVisibility"      Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#E8EEF4"/>
+            <Setter Property="BorderThickness"          Value="0"/>
+            <Setter Property="Background"               Value="Transparent"/>
+            <Setter Property="RowHeaderWidth"           Value="0"/>
+            <Setter Property="SelectionMode"            Value="Single"/>
+            <Setter Property="FontSize"                 Value="13"/>
+            <Setter Property="Foreground"               Value="{StaticResource TextBrush}"/>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background"      Value="#EDF2F7"/>
+            <Setter Property="Foreground"      Value="{StaticResource MutedBrush}"/>
+            <Setter Property="FontSize"        Value="11"/>
+            <Setter Property="FontWeight"      Value="SemiBold"/>
+            <Setter Property="Padding"         Value="10,8"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <Style TargetType="DataGridCell">
+            <Setter Property="Padding"         Value="0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#BBDEFB"/>
+                    <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="64"/>
+        </Grid.RowDefinitions>
+
+        <!-- ========= HEADER ========= -->
+        <Border Grid.Row="0" Background="{StaticResource HeroBrush}" Padding="24,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Width="38" Height="38" CornerRadius="9" Background="#1A8F9F" Margin="0,0,14,0">
+                        <TextBlock Text="L" Foreground="White" FontWeight="Bold" FontSize="20"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="Mapeamento LOIN" Foreground="White" FontSize="18" FontWeight="SemiBold"/>
+                        <TextBlock Text="Associe camadas e code styles às linhas da tabela LOIN (ISO 7817)"
+                                   Foreground="#9BBFD6" FontSize="12"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding EstatisticasMapeamento}"
+                               Foreground="#9BBFD6" FontSize="13"
+                               VerticalAlignment="Center" Margin="0,0,20,0"/>
+                    <Button Content="Carregar Layers" Style="{StaticResource SecondaryBtn}"
+                            Background="#1D4E6B" Foreground="White"
+                            Margin="0,0,8,0" Click="CarregarLayers_Click"/>
+                    <Button Content="Carregar Codes" Style="{StaticResource SecondaryBtn}"
+                            Background="#1D4E6B" Foreground="White"
+                            Click="CarregarCodes_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- ========= BODY ========= -->
+        <Grid Grid.Row="1" Margin="14,12,14,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="450"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- ===== PAINEL ESQUERDO: Tabela LOIN ===== -->
+            <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Cabeçalho -->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Tabela LOIN" FontSize="16" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextBrush}"/>
+                            <TextBlock Text="Requisitos de informação por tipo de elemento"
+                                       Style="{StaticResource LabelTxt}" Margin="0,3,0,0"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
+                            <Button Content="CSV" Style="{StaticResource SecondaryBtn}" FontSize="11"
+                                    Padding="10,7" Margin="0,0,6,0" Click="ImportarCsv_Click"/>
+                            <Button Content="Excel" Style="{StaticResource SecondaryBtn}" FontSize="11"
+                                    Padding="10,7" Click="ImportarExcel_Click"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Grid LOIN -->
+                    <DataGrid Grid.Row="2" x:Name="GridLoin"
+                              ItemsSource="{Binding LinhasLoin}"
+                              SelectedItem="{Binding LinhaSelecionada}"
+                              CanUserAddRows="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Id"         Width="55"  Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="Elemento"   Width="*"   Binding="{Binding Elemento}"/>
+                            <DataGridTextColumn Header="Disciplina" Width="88"  Binding="{Binding Disciplina}"/>
+                            <DataGridTextColumn Header="Fase"       Width="78"  Binding="{Binding Fase}"/>
+                            <DataGridTextColumn Header="LoG"        Width="40"  Binding="{Binding LoG}"/>
+                            <DataGridTextColumn Header="LoI"        Width="40"  Binding="{Binding LoI}"/>
+                            <DataGridTextColumn Header="Cor"        Width="90"
+                                                Binding="{Binding Cor, UpdateSourceTrigger=PropertyChanged}">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                        <Setter Property="ToolTip"
+                                                Value="RGB '255,255,0' | nome 'AMARELO' | hexa '#FFFF00' | ACI '50'"/>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="IFC"        Width="170"
+                                                Binding="{Binding IfcClass, UpdateSourceTrigger=PropertyChanged}">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                        <Setter Property="ToolTip"
+                                                Value="Classe IFC — ex.: IfcDistributionChamberElement, IfcPipeSegment"/>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Type"       Width="120"
+                                                Binding="{Binding PredefinedType, UpdateSourceTrigger=PropertyChanged}">
+                                <DataGridTextColumn.HeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                        <Setter Property="ToolTip"
+                                                Value="PredefinedType — ex.: MANHOLE, CULVERT, GUTTER, RIGIDSEGMENT (USERDEFINED p/ custom)"/>
+                                    </Style>
+                                </DataGridTextColumn.HeaderStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- Atributos da linha selecionada -->
+                    <Border Grid.Row="4" Background="#F8FAFC" CornerRadius="8" Padding="12,8"
+                            BorderBrush="{StaticResource SoftBorderBrush}" BorderThickness="1"
+                            Visibility="{Binding LinhaSelecionadaVisivel}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource LabelTxt}" Text="Atributos Obrigatórios"/>
+                            <TextBox Text="{Binding LinhaSelecionada.AtributosObrigatorios, UpdateSourceTrigger=PropertyChanged}"
+                                     BorderThickness="0" Background="Transparent"
+                                     FontSize="12" TextWrapping="Wrap" MaxHeight="48"
+                                     Foreground="{StaticResource TextBrush}"/>
+                            <TextBlock Style="{StaticResource LabelTxt}" Text="Atributos Opcionais" Margin="0,6,0,4"/>
+                            <TextBox Text="{Binding LinhaSelecionada.AtributosOpcionais, UpdateSourceTrigger=PropertyChanged}"
+                                     BorderThickness="0" Background="Transparent"
+                                     FontSize="12" TextWrapping="Wrap" MaxHeight="36"
+                                     Foreground="{StaticResource TextBrush}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Botões CRUD -->
+                    <StackPanel Grid.Row="6" Orientation="Horizontal">
+                        <Button Content="+ Nova linha" Style="{StaticResource SecondaryBtn}" FontSize="12"
+                                Margin="0,0,8,0" Click="AdicionarLinha_Click"/>
+                        <Button Content="Remover selecionada" Style="{StaticResource DangerBtn}" FontSize="12"
+                                Click="RemoverLinha_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- ===== PAINEL DIREITO: Mapeamento ===== -->
+            <Border Grid.Column="2" Style="{StaticResource CardStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="8"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Cabeçalho -->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Mapeamento  Camada / Code → Linha LOIN"
+                                       FontSize="16" FontWeight="SemiBold"
+                                       Foreground="{StaticResource TextBrush}"/>
+                            <TextBlock Text="Clique duas vezes em uma célula da coluna 'Linha LOIN' para abrir o seletor"
+                                       Style="{StaticResource LabelTxt}" Margin="0,3,0,0"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
+                            <Button Content="↔ Auto-largura" Style="{StaticResource SecondaryBtn}"
+                                    FontSize="11" Padding="10,7" Margin="0,0,6,0"
+                                    ToolTip="Ajusta automaticamente a largura das colunas ao conteúdo"
+                                    Click="AutoAjustarColunas_Click"/>
+                            <Button Content="Exportar CSV" Style="{StaticResource SecondaryBtn}"
+                                    FontSize="11" Padding="10,7"
+                                    Click="ExportarCsvMapeamento_Click"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Filtro + ação rápida -->
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="220"/>
+                            <ColumnDefinition Width="8"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ComboBox Grid.Column="0" x:Name="CmbFiltroOrigem"
+                                  ItemsSource="{Binding OrigensDisponiveis}"
+                                  SelectedItem="{Binding FiltroOrigem, UpdateSourceTrigger=PropertyChanged}"
+                                  DisplayMemberPath="Rotulo"
+                                  ToolTip="Filtrar por origem da camada / code style"
+                                  FontSize="13" Height="34"
+                                  VerticalContentAlignment="Center"
+                                  Padding="10,0"/>
+
+                        <Border Grid.Column="2" BorderBrush="{StaticResource SoftBorderBrush}"
+                                BorderThickness="1" CornerRadius="7" Padding="10,0">
+                            <TextBox x:Name="TxtFiltro"
+                                     Text="{Binding FiltroTexto, UpdateSourceTrigger=PropertyChanged}"
+                                     BorderThickness="0" Background="Transparent"
+                                     Foreground="{StaticResource TextBrush}" FontSize="13"
+                                     VerticalAlignment="Center" Height="34"
+                                     ToolTip="Busca livre em Camada / Origem / Linha LOIN"/>
+                        </Border>
+
+                        <Button Grid.Column="4" Content="Limpar não mapeados"
+                                Style="{StaticResource SecondaryBtn}" FontSize="11" Padding="10,7"
+                                Click="LimparSemMapeamento_Click"/>
+                    </Grid>
+
+                    <!-- Grid principal de mapeamento -->
+                    <DataGrid Grid.Row="4" x:Name="GridMapeamento"
+                              ItemsSource="{Binding MapeamentosFiltrados}"
+                              SelectedItem="{Binding ItemSelecionado}">
+
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Setter Property="Height" Value="36"/>
+                                <Setter Property="Background" Value="#F1F8E9"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Mapeado}" Value="False">
+                                        <Setter Property="Background" Value="#FFF8E1"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+
+                        <DataGrid.Columns>
+
+                            <!-- Ícone de status -->
+                            <DataGridTemplateColumn Header="" Width="34" CanUserResize="False">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextAlignment="Center" VerticalAlignment="Center"
+                                                   FontSize="14">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Text"       Value="✓"/>
+                                                    <Setter Property="Foreground" Value="#2E7D32"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Mapeado}" Value="False">
+                                                            <Setter Property="Text"       Value="⚠"/>
+                                                            <Setter Property="Foreground" Value="#E65100"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!-- Camada / Code Style (editável; cresce automaticamente até MaxWidth) -->
+                            <DataGridTextColumn Header="Camada / Code Style"
+                                               Width="Auto" MinWidth="160"
+                                               Binding="{Binding Camada}"/>
+
+                            <!-- Origem (cabe "Corridor-Shape" / "Code Set Style") -->
+                            <DataGridTemplateColumn Header="Origem" Width="Auto" MinWidth="110">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Origem}"
+                                                   Foreground="{StaticResource MutedBrush}"
+                                                   VerticalAlignment="Center"
+                                                   Margin="8,0" FontSize="11"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!-- Linha LOIN — ComboBox na edição, TextBlock na leitura -->
+                            <DataGridTemplateColumn Header="Linha LOIN" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock VerticalAlignment="Center" Margin="8,0"
+                                                   TextTrimming="CharacterEllipsis">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Text"
+                                                            Value="{Binding LoinLinhaSelecionada.DisplayLabel}"/>
+                                                    <Setter Property="Foreground"
+                                                            Value="{StaticResource TextBrush}"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Mapeado}" Value="False">
+                                                            <Setter Property="Text"
+                                                                    Value="(não mapeado — duplo clique para selecionar)"/>
+                                                            <Setter Property="Foreground"
+                                                                    Value="{StaticResource MutedBrush}"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <!-- ItemsSource aponta para LinhasDisponiveis do próprio item,
+                                             que é referência à mesma ObservableCollection do Window -->
+                                        <ComboBox ItemsSource="{Binding LinhasDisponiveis}"
+                                                  SelectedItem="{Binding LoinLinhaSelecionada,
+                                                                         UpdateSourceTrigger=PropertyChanged}"
+                                                  DisplayMemberPath="DisplayLabel"
+                                                  VerticalAlignment="Center"
+                                                  FontSize="12"
+                                                  BorderThickness="0"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!-- LoG preview -->
+                            <DataGridTemplateColumn Header="LoG" Width="46" CanUserResize="False">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding LoGDisplay}"
+                                                   TextAlignment="Center" VerticalAlignment="Center"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="{StaticResource AccentBrush}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!-- LoI preview -->
+                            <DataGridTemplateColumn Header="LoI" Width="46" CanUserResize="False">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding LoIDisplay}"
+                                                   TextAlignment="Center" VerticalAlignment="Center"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="{StaticResource HeroBrush}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- Barra de adição manual + remoção -->
+                    <Grid Grid.Row="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="8"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="8"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" BorderBrush="{StaticResource SoftBorderBrush}"
+                                BorderThickness="1" CornerRadius="7" Padding="10,0">
+                            <TextBox x:Name="TxtNovaEntrada"
+                                     Text="{Binding NovaEntradaCamada, UpdateSourceTrigger=PropertyChanged}"
+                                     BorderThickness="0" Background="Transparent"
+                                     Foreground="{StaticResource TextBrush}" FontSize="13"
+                                     VerticalAlignment="Center" Height="34"/>
+                        </Border>
+
+                        <Button Grid.Column="2" Content="+ Adicionar" Style="{StaticResource SecondaryBtn}"
+                                FontSize="12" Click="AdicionarEntradaManual_Click"/>
+
+                        <Button Grid.Column="4" Content="Remover" Style="{StaticResource DangerBtn}"
+                                FontSize="12" Click="RemoverEntrada_Click"/>
+                    </Grid>
+
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- ========= FOOTER ========= -->
+        <Border Grid.Row="2" Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource SoftBorderBrush}" BorderThickness="0,1,0,0">
+            <Grid Margin="16,0">
+                <TextBlock Text="{Binding CaminhoConfigExibido}"
+                           Foreground="{StaticResource MutedBrush}" FontSize="11"
+                           HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Button Content="Cancelar" Style="{StaticResource SecondaryBtn}"
+                            Margin="0,0,10,0" Click="Cancelar_Click"/>
+                    <Button Content="Salvar Mapeamento" Style="{StaticResource PrimaryBtn}"
+                            Click="SalvarMapeamento_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+    </Grid>
+</Window>

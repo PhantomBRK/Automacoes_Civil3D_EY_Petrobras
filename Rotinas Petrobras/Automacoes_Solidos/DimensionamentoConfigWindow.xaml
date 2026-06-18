@@ -1,0 +1,247 @@
+<Window x:Class="AutomacoesCivil3D.DimensionamentoConfigWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Regras de Dimensionamento — SOLIDOS Petrobras"
+        Width="960" Height="640"
+        MinWidth="880" MinHeight="560"
+        WindowStartupLocation="CenterScreen"
+        Background="#F3F6FA"
+        FontFamily="Bahnschrift">
+    <Window.Resources>
+        <SolidColorBrush x:Key="HeroBrush" Color="#10324B" />
+        <SolidColorBrush x:Key="AccentBrush" Color="#157A87" />
+        <SolidColorBrush x:Key="SurfaceBrush" Color="#FCFDFE" />
+        <SolidColorBrush x:Key="BorderBrushSoft" Color="#D6DFE8" />
+        <SolidColorBrush x:Key="TextBrush" Color="#173042" />
+        <SolidColorBrush x:Key="MutedBrush" Color="#607080" />
+
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+            <Setter Property="CornerRadius" Value="18" />
+            <Setter Property="Padding" Value="18" />
+            <Setter Property="BorderBrush" Value="{StaticResource BorderBrushSoft}" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+
+        <Style x:Key="SectionTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+        </Style>
+
+        <Style x:Key="FieldLabel" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource MutedBrush}" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Margin" Value="0,0,0,3" />
+        </Style>
+
+        <Style x:Key="InputStyle" TargetType="TextBox">
+            <Setter Property="Height" Value="38" />
+            <Setter Property="Padding" Value="10,7" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="BorderBrush" Value="{StaticResource BorderBrushSoft}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="{StaticResource AccentBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="18,12" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource PrimaryButtonStyle}">
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+            <Setter Property="Background" Value="#E7EDF3" />
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="22">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="18" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- HERO lateral -->
+        <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
+                Background="{StaticResource HeroBrush}"
+                CornerRadius="24" Padding="24">
+            <StackPanel>
+                <Border Width="64" Height="64" CornerRadius="18"
+                        Background="#1A90A0" HorizontalAlignment="Left">
+                    <Viewbox Margin="14">
+                        <TextBlock Text="∅" Foreground="White" FontWeight="Bold" />
+                    </Viewbox>
+                </Border>
+
+                <TextBlock Margin="0,20,0,8" FontSize="25" FontWeight="SemiBold"
+                           Foreground="White" Text="Dimensionamento" />
+                <TextBlock TextWrapping="Wrap" Foreground="#C9DAE7" FontSize="13" LineHeight="21"
+                           Text="Defina os critérios hidráulicos da rede de drenagem por gravidade. A rotina escolhe diâmetro e declividade de cada tubo respeitando estas regras." />
+
+                <Border Margin="0,22,0,0" CornerRadius="16" Background="#0F415E" Padding="16">
+                    <StackPanel>
+                        <TextBlock Text="Como funciona" FontSize="14" FontWeight="SemiBold" Foreground="White" />
+                        <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" Foreground="#D0E2EE"
+                                   FontSize="12" LineHeight="19"
+                                   Text="1. Testa a faixa de declividade IDEAL.&#x0a;2. Se nenhum DN do catálogo couber, recorre à faixa DURA.&#x0a;3. Respeita Y/D, velocidade e recobrimento mínimo.&#x0a;4. Funis consecutivos: só o de maior vazão segue; os demais são apagados." />
+                    </StackPanel>
+                </Border>
+
+                <Border Margin="0,16,0,0" CornerRadius="16" Background="#FFF6EF"
+                        BorderBrush="#F2D8C8" BorderThickness="1" Padding="14">
+                    <TextBlock TextWrapping="Wrap" Foreground="#7B583F" FontSize="12" LineHeight="18"
+                               Text="As regras são salvas em %APPDATA%\AutomacoesPetrobras e reaproveitadas na próxima execução." />
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <!-- CONTEÚDO -->
+        <ScrollViewer Grid.Row="0" Grid.Column="2" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <!-- Declividade -->
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource SectionTitle}" Text="Declividade (i)" />
+                        <TextBlock Margin="0,4,0,14" Foreground="{StaticResource MutedBrush}" FontSize="12"
+                                   TextWrapping="Wrap"
+                                   Text="A faixa ideal é tentada primeiro; a dura é o fallback quando nenhum diâmetro do catálogo atende dentro da ideal." />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="14" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="14" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="14" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Style="{StaticResource FieldLabel}" Text="Ideal mín (%)" />
+                                <TextBox x:Name="TxtIdealMin" Style="{StaticResource InputStyle}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Style="{StaticResource FieldLabel}" Text="Ideal máx (%)" />
+                                <TextBox x:Name="TxtIdealMax" Style="{StaticResource InputStyle}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="4">
+                                <TextBlock Style="{StaticResource FieldLabel}" Text="Dura mín (%)" />
+                                <TextBox x:Name="TxtDuraMin" Style="{StaticResource InputStyle}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="6">
+                                <TextBlock Style="{StaticResource FieldLabel}" Text="Dura máx (%)" />
+                                <TextBox x:Name="TxtDuraMax" Style="{StaticResource InputStyle}" />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Velocidade + Lâmina -->
+                <Border Margin="0,16,0,0" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource SectionTitle}" Text="Velocidade e lâmina" />
+                        <Grid Margin="0,14,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="14" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="14" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="14" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Style="{StaticResource FieldLabel}" Text="V mín (m/s)" />
+                                <TextBox x:Name="TxtVmin" Style="{StaticResource InputStyle}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Style="{StaticResource FieldLabel}" Text="V máx (m/s)" />
+                                <TextBox x:Name="TxtVmax" Style="{StaticResource InputStyle}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="4">
+                                <TextBlock Style="{StaticResource FieldLabel}" Text="Y/D máx (%)" />
+                                <TextBox x:Name="TxtYDmax" Style="{StaticResource InputStyle}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="6">
+                                <TextBlock Style="{StaticResource FieldLabel}" Text="Passo i (%)" />
+                                <TextBox x:Name="TxtSlopeStep" Style="{StaticResource InputStyle}" />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Materiais e cotas -->
+                <Border Margin="0,16,0,0" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource SectionTitle}" Text="Material e cotas" />
+                        <Grid Margin="0,14,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="14" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="14" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Style="{StaticResource FieldLabel}" Text="Manning (n)" />
+                                <TextBox x:Name="TxtManning" Style="{StaticResource InputStyle}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Style="{StaticResource FieldLabel}" Text="Recobrim. mín (m)" />
+                                <TextBox x:Name="TxtRecobrimento" Style="{StaticResource InputStyle}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="4">
+                                <TextBlock Style="{StaticResource FieldLabel}" Text="Folga selo ralo (m)" />
+                                <TextBox x:Name="TxtFolgaSeloRalo" Style="{StaticResource InputStyle}" />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Catálogo -->
+                <Border Margin="0,16,0,0" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource SectionTitle}" Text="Catálogo de diâmetros (DN em mm)" />
+                        <TextBlock Margin="0,4,0,10" Foreground="{StaticResource MutedBrush}" FontSize="12"
+                                   TextWrapping="Wrap"
+                                   Text="Separados por vírgula. A rotina usa apenas os DNs também suportados pelo template SOLIDOS; os demais são ignorados com aviso." />
+                        <TextBox x:Name="TxtCatalogo" Style="{StaticResource InputStyle}"
+                                 Height="Auto" MinHeight="38" TextWrapping="Wrap" AcceptsReturn="False" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Rodapé de ações -->
+        <Border Grid.Row="1" Grid.Column="2" Margin="0,16,0,0"
+                Style="{StaticResource CardStyle}" Padding="14">
+            <DockPanel LastChildFill="False">
+                <Button DockPanel.Dock="Left"
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        Content="Restaurar padrão" Click="OnRestaurarDefault" />
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                    <Button Width="120" Margin="0,0,10,0"
+                            Style="{StaticResource SecondaryButtonStyle}"
+                            Content="Cancelar" Click="OnCancelar" />
+                    <Button Width="170"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Content="Dimensionar" IsDefault="True" Click="OnDimensionar" />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+    </Grid>
+</Window>

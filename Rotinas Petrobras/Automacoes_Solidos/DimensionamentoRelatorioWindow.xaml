@@ -1,0 +1,164 @@
+<Window x:Class="AutomacoesCivil3D.DimensionamentoRelatorioWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Relatório de Dimensionamento — SOLIDOS Petrobras"
+        Width="1560" Height="760"
+        MinWidth="1100" MinHeight="600"
+        WindowStartupLocation="CenterScreen"
+        Background="#F3F6FA"
+        FontFamily="Bahnschrift">
+    <Window.Resources>
+        <SolidColorBrush x:Key="HeroBrush" Color="#10324B" />
+        <SolidColorBrush x:Key="AccentBrush" Color="#157A87" />
+        <SolidColorBrush x:Key="SurfaceBrush" Color="#FCFDFE" />
+        <SolidColorBrush x:Key="BorderBrushSoft" Color="#D6DFE8" />
+        <SolidColorBrush x:Key="TextBrush" Color="#173042" />
+        <SolidColorBrush x:Key="MutedBrush" Color="#607080" />
+
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+            <Setter Property="CornerRadius" Value="18" />
+            <Setter Property="Padding" Value="18" />
+            <Setter Property="BorderBrush" Value="{StaticResource BorderBrushSoft}" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+
+        <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="{StaticResource AccentBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="18,12" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+
+        <Style x:Key="SecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource PrimaryButtonStyle}">
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+            <Setter Property="Background" Value="#E7EDF3" />
+        </Style>
+
+        <!-- Linhas puladas em cinza; OK em texto normal -->
+        <Style x:Key="RowStyle" TargetType="DataGridRow">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsOk}" Value="False">
+                    <Setter Property="Background" Value="#FBF3F1" />
+                    <Setter Property="Foreground" Value="#9A4A3A" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="22">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="16" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Cabeçalho com cards de resumo -->
+        <Border Grid.Row="0" Background="{StaticResource HeroBrush}" CornerRadius="22" Padding="22">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock Text="Relatório de dimensionamento" FontSize="24" FontWeight="SemiBold" Foreground="White" />
+                    <TextBlock x:Name="TxtResumo" Margin="0,6,0,0" Foreground="#C9DAE7" FontSize="13" TextWrapping="Wrap" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border CornerRadius="16" Background="#0F415E" Padding="18,12" Margin="0,0,10,0">
+                        <StackPanel>
+                            <TextBlock Text="Tubos" Foreground="#9FB8C9" FontSize="12" />
+                            <TextBlock x:Name="TxtTotal" Text="0" FontSize="26" FontWeight="SemiBold" Foreground="White" />
+                        </StackPanel>
+                    </Border>
+                    <Border CornerRadius="16" Background="#13564B" Padding="18,12" Margin="0,0,10,0">
+                        <StackPanel>
+                            <TextBlock Text="Dimensionados" Foreground="#A6D8C9" FontSize="12" />
+                            <TextBlock x:Name="TxtOk" Text="0" FontSize="26" FontWeight="SemiBold" Foreground="White" />
+                        </StackPanel>
+                    </Border>
+                    <Border CornerRadius="16" Background="#5C3A33" Padding="18,12">
+                        <StackPanel>
+                            <TextBlock Text="Pulados" Foreground="#E6BCAE" FontSize="12" />
+                            <TextBlock x:Name="TxtPulados" Text="0" FontSize="26" FontWeight="SemiBold" Foreground="White" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Filtro -->
+        <Border Grid.Row="2" Style="{StaticResource CardStyle}" Padding="0">
+            <DockPanel>
+                <Border DockPanel.Dock="Top" Padding="14,12,14,10">
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center"
+                                   Text="Trechos" FontSize="16" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextBrush}" />
+                        <CheckBox x:Name="ChkSoPulados" DockPanel.Dock="Right" VerticalAlignment="Center"
+                                  Content="Mostrar só pulados" Foreground="{StaticResource MutedBrush}"
+                                  Checked="OnFiltroMudou" Unchecked="OnFiltroMudou" />
+                    </DockPanel>
+                </Border>
+                <DataGrid x:Name="Grid"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          CanUserSortColumns="True"
+                          CanUserResizeColumns="True"
+                          HeadersVisibility="Column"
+                          GridLinesVisibility="Horizontal"
+                          BorderThickness="0"
+                          Background="White"
+                          RowBackground="White"
+                          AlternatingRowBackground="#F4F8FB"
+                          RowStyle="{StaticResource RowStyle}"
+                          FontSize="13">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Handle"        Binding="{Binding Handle}"            Width="80" />
+                        <DataGridTextColumn Header="Família mont." Binding="{Binding NoMontanteFamilia}" Width="140" />
+                        <DataGridTextColumn Header="Família jus."  Binding="{Binding NoJusanteFamilia}"  Width="140" />
+                        <DataGridTextColumn Header="DN ant. (mm)"  Binding="{Binding DNmmAnterior}"      Width="80" />
+                        <DataGridTextColumn Header="DN novo (mm)"  Binding="{Binding DNmm}"              Width="85" />
+                        <DataGridTextColumn Header="i aplic. (%)"  Binding="{Binding SlopePctTxt}"       Width="80" />
+                        <DataGridTextColumn Header="Regime"        Binding="{Binding RegimeTxt}"         Width="80" />
+                        <DataGridTextColumn Header="Q plv (L/s)"   Binding="{Binding QLsTxt}"            Width="78" />
+                        <DataGridTextColumn Header="V plv (m/s)"   Binding="{Binding VMsTxt}"            Width="75" />
+                        <DataGridTextColumn Header="Y/D plv (%)"   Binding="{Binding YDPctTxt}"          Width="78" />
+                        <DataGridTextColumn Header="Q inc (L/s)"   Binding="{Binding QLsIncTxt}"         Width="78" />
+                        <DataGridTextColumn Header="V inc (m/s)"   Binding="{Binding VMsIncTxt}"         Width="75" />
+                        <DataGridTextColumn Header="Y/D inc (%)"   Binding="{Binding YDPctIncTxt}"       Width="78" />
+                        <DataGridTextColumn Header="Z mont."       Binding="{Binding ZMontanteTxt}"      Width="80" />
+                        <DataGridTextColumn Header="Z jus."        Binding="{Binding ZJusanteTxt}"       Width="80" />
+                        <DataGridTextColumn Header="L (m)"         Binding="{Binding ComprimentoMTxt}"   Width="65" />
+                        <DataGridTextColumn Header="Recob (m)"     Binding="{Binding RecobTxt}"          Width="75" />
+                        <DataGridTextColumn Header="Status"        Binding="{Binding Status}"            Width="*" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </Border>
+
+        <!-- Rodapé -->
+        <Border Grid.Row="3" Margin="0,16,0,0" Style="{StaticResource CardStyle}" Padding="14">
+            <DockPanel LastChildFill="False">
+                <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center"
+                           Foreground="{StaticResource MutedBrush}" FontSize="12"
+                           Text="Linhas em vermelho = tubos não dimensionados (ver coluna Status)." />
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                    <Button Margin="0,0,10,0" Style="{StaticResource SecondaryButtonStyle}"
+                            Content="Copiar para clipboard" Click="OnCopiarClipboard" />
+                    <Button Margin="0,0,10,0" Style="{StaticResource SecondaryButtonStyle}"
+                            Content="Exportar CSV" Click="OnExportarCsv" />
+                    <Button Width="120" Style="{StaticResource PrimaryButtonStyle}"
+                            Content="Fechar" Click="OnFechar" IsCancel="True" />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+    </Grid>
+</Window>
