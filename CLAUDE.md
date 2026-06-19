@@ -89,3 +89,14 @@ Após build, o plugin já está deployado em `%AppData%\Autodesk\ApplicationPlug
 ## Quando explorar código
 
 Os arquivos `.cs` são grandes (`IfcSolidosDrainageBinder.cs` tem 84KB, `QUANTITIES_IFC.cs` 49KB, `MaterialExtraction.cs` 28KB). **Use Grep antes de Read.** Para entender uma rotina, busque pelo `[CommandMethod("...")]` correspondente — esse é o entry point.
+
+## Assistência do Claude Code (`.claude/`)
+
+O repo versiona em `.claude/` um conjunto curado de subagents (ver `.claude/README.md`). Destaque: **`csharp-reviewer`** — review de C# adaptado a este projeto (MSBuild, não `dotnet`; checa `Transaction`/`using`, singletons `Manager.Doc*`, `[CommandMethod]`).
+
+Regras de C# de referência (origem ECC/MIT, adaptadas — trechos web/backend podem não se aplicar a este plugin desktop):
+
+@.claude/rules/csharp/coding-style.md
+@.claude/rules/csharp/patterns.md
+@.claude/rules/csharp/security.md
+@.claude/rules/csharp/testing.md
