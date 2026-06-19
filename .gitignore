@@ -17,7 +17,11 @@ bin_codex/
 *.VC.db
 
 # --- Estado local do Claude Code (worktrees, sessões) em qualquer nível
-.claude/
+#     Conteúdo do .claude/ é local, EXCETO config compartilhada versionada
+#     (settings.json / README.md — ver .claude/README.md).
+.claude/*
+!.claude/settings.json
+!.claude/README.md
 settings.local.json
 
 # --- DLLs / binários de terceiros e símbolos ------------------------
