@@ -21,7 +21,10 @@ namespace AutomacoesCivil3D
 {
     public class IfcSolidModelPsetImporter
     {
-        private const string DefaultWorkbookPath = @"C:\Users\Gleison Costa\OneDrive\Área de Trabalho\PARAMETROS DE MODELOS SOLIDOS.xlsx";
+        // Instalado JUNTO do plugin (Resources\Quantitativos do bundle). Se não existir,
+        // ResolveWorkbookPath cai para o file dialog.
+        private static string DefaultWorkbookPath =>
+            BundlePaths.Resource("Quantitativos", "PARAMETROS DE MODELOS SOLIDOS.xlsx");
         private const string PsetPrefix = "PSET_";
 
         [CommandMethod("IFC_IMPORTAR_PSETS_MODELOS_SOLIDOS")]

@@ -22,13 +22,14 @@ namespace RotinasPetrobras.Quantitativos
     /// </summary>
     public partial class SolQuantTubos
     {
-        // Template-fonte. Copiado pra pasta do DWG na 1ª execução (não mexe no original).
-        private const string TEMPLATE_ORIGEM =
-            @"C:\Users\Gleison Costa\OneDrive\Área de Trabalho\CONSULTORIA PETROBRÁS\00_TEMPLATE SÓLIDOS\PLANILHA DE CALCULO DE QUANTITATIVOS LEANDRO COM OTIMIZAÇÃO DA ABA RESUMO.xlsx";
-
         // Nome do arquivo local copiado pra pasta do DWG.
         private const string TEMPLATE_NOME_LOCAL =
             "PLANILHA DE CALCULO DE QUANTITATIVOS LEANDRO COM OTIMIZAÇÃO DA ABA RESUMO.xlsx";
+
+        // Template-fonte, instalado JUNTO do plugin (Resources\Quantitativos do bundle).
+        // Copiado pra pasta do DWG na 1ª execução (não mexe no original).
+        private static string TEMPLATE_ORIGEM =>
+            BundlePaths.Resource("Quantitativos", TEMPLATE_NOME_LOCAL);
 
         // 3 sheets-modelo de tubo. Cada uma tem título próprio ("DRENAGEM PLUVIAL LIMPA",
         // "DRENAGEM CONTAMINADA", "DRENAGEM OLEOSA"). A escolha é feita por substring no

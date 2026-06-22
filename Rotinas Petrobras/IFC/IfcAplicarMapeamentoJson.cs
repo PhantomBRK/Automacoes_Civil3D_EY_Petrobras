@@ -24,7 +24,8 @@ namespace AutomacoesCivil3D
     public class IfcAplicarMapeamentoJson
     {
         public const string DictName = "IFC_MAPPING";
-        public const string DefaultJsonPath = "C:\\Users\\Gleison Costa\\OneDrive\\Área de Trabalho\\CONSULTORIA PETROBRÁS\\00_TEMPLATE SÓLIDOS\\TEMPLATE SÓLIDOS 2026\\ARQUIVOS VERSAO MAIS RECENTE TEMPLATE SÓLIDOS FEV_2026\\IfcMapping.json";
+        // Mapeamento instalado JUNTO do plugin (Resources\ARQUIVOS IFC do bundle).
+        public static string DefaultJsonPath => BundlePaths.Resource("ARQUIVOS IFC", "IfcMapping.json");
         public static MethodInfo _solidosGetNodeParamMethod;
         public static readonly object ConfigCacheLock = new object();
         public static string _cachedConfigPath = string.Empty;
@@ -42,16 +43,20 @@ namespace AutomacoesCivil3D
             try
             {
                 string jsonPath = DefaultJsonPath;
-                if (string.IsNullOrWhiteSpace(jsonPath))
+                if (string.IsNullOrWhiteSpace(jsonPath) || !File.Exists(jsonPath))
                 {
-                    docEditor.WriteMessage("\nOperação cancelada.");
-                    return;
-                }
-
-                if (!File.Exists(jsonPath))
-                {
-                    docEditor.WriteMessage("\nArquivo JSON não encontrado: " + jsonPath);
-                    return;
+                    // Não veio instalado no bundle — pede o arquivo ao usuário.
+                    var pfo = new PromptOpenFileOptions("\nSelecione 'IfcMapping.json'")
+                    {
+                        Filter = "JSON (*.json)|*.json|Todos (*.*)|*.*"
+                    };
+                    var fr = docEditor.GetFileNameForOpen(pfo);
+                    if (fr.Status != PromptStatus.OK)
+                    {
+                        docEditor.WriteMessage("\nOperação cancelada.");
+                        return;
+                    }
+                    jsonPath = fr.StringResult;
                 }
 
                 IfcCompiledMappingConfig config = GetOrLoadCompiledConfig(jsonPath);

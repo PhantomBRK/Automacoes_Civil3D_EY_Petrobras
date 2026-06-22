@@ -1,0 +1,219 @@
+{
+  "displayName": "Automacoes Petrobras",
+  "bundleName": "AutomacoesPetrobras.bundle",
+  "packageFileName": "AutomacoesPetrobras-package.zip",
+  "productCode": "{7D76E8B2-995E-4F88-8D7B-2FD1B0F81A5A}",
+  "author": "Gleison Bruno da Costa",
+  "companyName": "Sua Empresa",
+  "companyEmail": "contato@suaempresa.com",
+  "companyUrl": "https://www.suaempresa.com",
+  "autodeskProduct": "Civil3D",
+  "runtime": {
+    "os": "Win64",
+    "platform": "Civil3D",
+    "seriesMin": "R25.1",
+    "seriesMax": "R25.1"
+  },
+  "mainSource": "C:\\Users\\Gleison Costa\\AppData\\Roaming\\Autodesk\\ApplicationPlugins\\AutomacoesPetrobras.bundle\\Contents",
+  "buildProjects": [
+    "..\\Rotinas Petrobras\\AutomacoesCivil3D.csproj",
+    "..\\RotinaAlinhamento\\CriaProfiles.csproj"
+  ],
+  "excludePatterns": [
+    "*.pdb",
+    "*.xml",
+    "*.zip",
+    "acad*.err",
+    "Release.rar",
+    "* - Copia.*",
+    "AutomacoesCivil3D_*.dll",
+    "AutomacoesCivil3D_*.deps.json",
+    "AutomacoesCivil3D1234.dll",
+    "AutomacoesCivil3D1234.deps.json",
+    "CriaProfiles_*.dll",
+    "CriaProfiles_*.deps.json"
+  ],
+  "copyRules": [],
+  "extraFiles": [
+    {
+      "source": "..\\..\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\IfcMapping.json",
+      "destination": "Contents\\IfcMapping.json"
+    },
+    {
+      "source": "..\\..\\TEMPLATES ABRIL 2026\\ARQUIVOS IFC\\IfcInfraConfiguration.json",
+      "destination": "Contents\\IfcInfraConfiguration.json"
+    },
+    {
+      "source": "..\\..\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\IfcInfraExportMapping.json",
+      "destination": "Contents\\IfcInfraExportMapping.json"
+    },
+    {
+      "source": "..\\..\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\IfcInfraExportPropertyMapping.json",
+      "destination": "Contents\\IfcInfraExportPropertyMapping.json"
+    },
+    {
+      "source": "..\\..\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\IfcInfraExportPropertyMapping.csv",
+      "destination": "Contents\\IfcInfraExportPropertyMapping.csv"
+    },
+    {
+      "source": "..\\..\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\IfcMapping.json",
+      "destination": "Resources\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\IfcMapping.json"
+    },
+    {
+      "source": "..\\..\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\IfcInfraConfiguration.json",
+      "destination": "Resources\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\IfcInfraConfiguration.json"
+    },
+    {
+      "source": "..\\..\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\IfcInfraExportMapping.json",
+      "destination": "Resources\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\IfcInfraExportMapping.json"
+    },
+    {
+      "source": "..\\..\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\IfcInfraExportPropertyMapping.json",
+      "destination": "Resources\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\IfcInfraExportPropertyMapping.json"
+    },
+    {
+      "source": "..\\..\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\IfcInfraExportPropertyMapping.csv",
+      "destination": "Resources\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\IfcInfraExportPropertyMapping.csv"
+    },
+    {
+      "source": "..\\..\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\ARQUIVOS INTERFACE\\Automacoes_Drenagem.cuix",
+      "destination": "interfaces\\Automacoes_Drenagem.cuix"
+    },
+    {
+      "source": "..\\..\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\ARQUIVOS INTERFACE\\automacoes_drenagem.mnr",
+      "destination": "interfaces\\automacoes_drenagem.mnr"
+    },
+    {
+      "source": "..\\..\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\ARQUIVOS INTERFACE\\automacoes_drenagem_light.mnr",
+      "destination": "interfaces\\automacoes_drenagem_light.mnr"
+    },
+    {
+      "source": "..\\..\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\ARQUIVOS INTERFACE\\Rotinas_PAV.cuix",
+      "destination": "interfaces\\Rotinas_PAV.cuix"
+    },
+    {
+      "source": "..\\..\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\ARQUIVOS INTERFACE\\rotinas_pav.mnr",
+      "destination": "interfaces\\rotinas_pav.mnr"
+    },
+    {
+      "source": "..\\..\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\INT-MO-5295.00-22312-182-PEI_Ver.2.7.dwt",
+      "destination": "Resources\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\INT-MO-5295.00-22312-182-PEI_Ver.2.7.dwt"
+    },
+    {
+      "source": "..\\..\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\PLANILHA_MODELO_EXTRAÇÃO_QUANTITATIVOS_SMEC.xlsx",
+      "destination": "Resources\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\PLANILHA_MODELO_EXTRAÇÃO_QUANTITATIVOS_SMEC.xlsx"
+    },
+    {
+      "source": "..\\..\\00_TEMPLATE SÓLIDOS\\PLANILHA DE CALCULO DE QUANTITATIVOS LEANDRO COM OTIMIZAÇÃO DA ABA RESUMO.xlsx",
+      "destination": "Resources\\Quantitativos\\PLANILHA DE CALCULO DE QUANTITATIVOS LEANDRO COM OTIMIZAÇÃO DA ABA RESUMO.xlsx"
+    },
+    {
+      "source": "..\\..\\00_TEMPLATE SÓLIDOS\\Drenagem_1 2.xlsx",
+      "destination": "Resources\\Quantitativos\\Drenagem_1 2.xlsx"
+    },
+    {
+      "source": "..\\..\\00_TEMPLATE SÓLIDOS\\TEMPLATE SÓLIDOS 2026\\ARQUIVOS VERSAO MAIS RECENTE TEMPLATE SÓLIDOS FEV_2026\\IfcMapping.json",
+      "destination": "Resources\\ARQUIVOS IFC\\IfcMapping.json"
+    }
+  ],
+  "extraDirectories": [
+    {
+      "source": "..\\..\\TEMPLATES ABRIL 2026\\ARQUIVOS IFC",
+      "destination": "Resources\\TEMPLATES ABRIL 2026\\ARQUIVOS IFC",
+      "excludePatterns": [
+        "*.bak",
+        "*.bak.*",
+        "* - Copia.*"
+      ]
+    },
+    {
+      "source": "..\\..\\TEMPLATES ABRIL 2026\\SUBASSEMBLYS",
+      "destination": "Resources\\TEMPLATES ABRIL 2026\\SUBASSEMBLYS",
+      "excludePatterns": [
+        "*.bak",
+        "*.bak.*",
+        "* - Copia.*"
+      ]
+    },
+    {
+      "source": "..\\..\\TEMPLATES ABRIL 2026\\TEMPLATE TERRAPLENAGEM",
+      "destination": "Resources\\TEMPLATES ABRIL 2026\\TEMPLATE TERRAPLENAGEM",
+      "excludePatterns": [
+        "*.bak",
+        "*.bak.*",
+        "* - Copia.*"
+      ]
+    }
+  ],
+  "installerConfiguration": {
+    "bundleSupportPaths": [
+      "Contents",
+      "interfaces",
+      "Resources\\TEMPLATES ABRIL 2026",
+      "Resources\\TEMPLATES ABRIL 2026\\ARQUIVOS IFC",
+      "Resources\\TEMPLATES ABRIL 2026\\SUBASSEMBLYS",
+      "Resources\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM",
+      "Resources\\TEMPLATES ABRIL 2026\\TEMPLATE TERRAPLENAGEM"
+    ],
+    "bundleTrustedPaths": [
+      "Contents",
+      "interfaces",
+      "Resources\\TEMPLATES ABRIL 2026",
+      "Resources\\TEMPLATES ABRIL 2026\\ARQUIVOS IFC",
+      "Resources\\TEMPLATES ABRIL 2026\\SUBASSEMBLYS",
+      "Resources\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM",
+      "Resources\\TEMPLATES ABRIL 2026\\TEMPLATE TERRAPLENAGEM"
+    ],
+    "templateRelativePath": "Resources\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\INT-MO-5295.00-22312-182-PEI_Ver.2.7.dwt",
+    "templateRelativePaths": [
+      "Resources\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\INT-MO-5295.00-22312-182-PEI_Ver.2.7.dwt",
+      "Resources\\TEMPLATES ABRIL 2026\\TEMPLATE TERRAPLENAGEM\\DE-0000.00-0000-TRP_PAV-000_2026.dwt"
+    ],
+    "ribbonRelativePaths": [
+      "interfaces\\Automacoes_Drenagem.cuix",
+      "interfaces\\Rotinas_PAV.cuix"
+    ],
+    "legacyRibbonFileNames": [
+      "ribbonrotinaspetrobras.cuix",
+      "RIBBON_ROTINAS.cuix"
+    ],
+    "obsoleteInstallRelativePaths": [
+      "pt-br",
+      "Resources\\TEMPLATES ABRIL 2026\\ARQUIVOS INTERFACE",
+      "Resources\\TEMPLATES ABRIL 2026\\TEMPLATE_DRENAGEM_SOLIDOS_HDT_REPAR_Ver.2.65.dwt",
+      "Resources\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\SHOWROOM HDT REPAR - SOLIDOS Ver.2.65.dwg",
+      "Resources\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\TEMPLATE_DRENAGEM_SOLIDOS_HDT_REPAR_Ver.2.65.dwt",
+      "Resources\\TEMPLATES ABRIL 2026\\TEMPLATE DRENAGEM\\TEMPLATE_DRENAGEM_SOLIDOS_HDT_REPAR_Ver.2.7.dwt"
+    ]
+  },
+  "components": [
+    {
+      "appName": "AutomacoesCivil3D",
+      "moduleName": ".\\Contents\\AutomacoesCivil3D.dll",
+      "appDescription": "Civil 3D 2026",
+      "loadOnAutoCADStartup": true,
+      "loadOnRequest": true,
+      "appType": ".NET"
+    },
+    {
+      "appName": "CriaProfiles",
+      "moduleName": ".\\Contents\\CriaProfiles.dll",
+      "appDescription": "Civil 3D 2026",
+      "loadOnAutoCADStartup": true,
+      "loadOnRequest": true,
+      "appType": ".NET"
+    },
+    {
+      "appName": "AutomacoesDrenagemRibbon",
+      "moduleName": ".\\interfaces\\Automacoes_Drenagem.cuix",
+      "appDescription": "Ribbon Drenagem",
+      "appType": "CuiX"
+    },
+    {
+      "appName": "RotinasPavRibbon",
+      "moduleName": ".\\interfaces\\Rotinas_PAV.cuix",
+      "appDescription": "Ribbon Pavimentacao",
+      "appType": "CuiX"
+    }
+  ]
+}

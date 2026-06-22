@@ -27,8 +27,9 @@ namespace RotinasPetrobras.Quantitativos
     public partial class SolQuantTubos
     {
         // ---- Template de destino (FORMULÁRIO + TABELAS_AUXILIARES) ----
-        private const string TEMPLATE_DRENAGEM_ORIGEM =
-            @"C:\Users\Gleison Costa\OneDrive\Área de Trabalho\CONSULTORIA PETROBRÁS\00_TEMPLATE SÓLIDOS\Drenagem_1 2.xlsx";
+        // Instalado JUNTO do plugin (Resources\Quantitativos do bundle).
+        private static string TEMPLATE_DRENAGEM_ORIGEM =>
+            BundlePaths.Resource("Quantitativos", "Drenagem_1 2.xlsx");
 
         // ---- Famílias SMEC ----
         private const string FAMILIA_TUBULACOES = "TUBULAÇÕES";

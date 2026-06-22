@@ -8,19 +8,22 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <Platforms>AnyCPU;x64;ARM64;x86</Platforms>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <AssemblyName>AutomacoesCivil3D1</AssemblyName>
+    <AssemblyName>AutomacoesCivil3D</AssemblyName>
     <UseWPF>true</UseWPF>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <SupportedOSPlatformVersion>8.0</SupportedOSPlatformVersion>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <PetrobrasBundleDir>$(AppData)\Autodesk\ApplicationPlugins\AutomacoesPetrobras.bundle\Contents\</PetrobrasBundleDir>
+    <!-- Raiz Resources do bundle deployado (irmã de Contents) e fonte dos templates de quantitativo. -->
+    <PetrobrasBundleResourcesDir>$(AppData)\Autodesk\ApplicationPlugins\AutomacoesPetrobras.bundle\Resources</PetrobrasBundleResourcesDir>
+    <SolidTemplatesSource>$(MSBuildProjectDirectory)\..\..\00_TEMPLATE SÓLIDOS</SolidTemplatesSource>
     <AcadDir Condition="'$(AcadDir)' == ''">C:\Program Files\Autodesk\AutoCAD 2026</AcadDir>
     <CivilDir>$(AcadDir)\C3D</CivilDir>
     <MapDir>$(AcadDir)\Map</MapDir>
     <SignAssembly>True</SignAssembly>
     <PackageId>$(AssemblyName)</PackageId>
-    <AssemblyTitle>AutomacoesCivil3D1</AssemblyTitle>
-    <RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))1</RootNamespace>
+    <AssemblyTitle>AutomacoesCivil3D</AssemblyTitle>
+    <RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>True</Optimize>
@@ -269,5 +272,10 @@
     <Copy SourceFiles="$(TargetPath)" DestinationFiles="$(PetrobrasBundleDir)AutomacoesCivil3D.dll" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="true" ContinueOnError="WarnAndContinue" />
     <Copy SourceFiles="$(TargetDir)$(TargetName).deps.json" DestinationFiles="$(PetrobrasBundleDir)AutomacoesCivil3D.deps.json" Condition="Exists('$(TargetDir)$(TargetName).deps.json')" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="true" ContinueOnError="WarnAndContinue" />
     <Copy SourceFiles="$(TargetDir)Microsoft.Extensions.Options.dll" DestinationFiles="$(PetrobrasBundleDir)Microsoft.Extensions.Options.dll" Condition="Exists('$(TargetDir)Microsoft.Extensions.Options.dll')" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="true" ContinueOnError="WarnAndContinue" />
+    <!-- Recursos lidos pelas rotinas em runtime (BundlePaths.Resource). Copiados de 00_TEMPLATE SÓLIDOS quando presente; no PC do cliente quem instala isso é o instalador (bundle-definition.json). -->
+    <MakeDir Directories="$(PetrobrasBundleResourcesDir)\Quantitativos;$(PetrobrasBundleResourcesDir)\ARQUIVOS IFC" />
+    <Copy SourceFiles="$(SolidTemplatesSource)\PLANILHA DE CALCULO DE QUANTITATIVOS LEANDRO COM OTIMIZAÇÃO DA ABA RESUMO.xlsx" DestinationFolder="$(PetrobrasBundleResourcesDir)\Quantitativos" Condition="Exists('$(SolidTemplatesSource)\PLANILHA DE CALCULO DE QUANTITATIVOS LEANDRO COM OTIMIZAÇÃO DA ABA RESUMO.xlsx')" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="true" ContinueOnError="WarnAndContinue" />
+    <Copy SourceFiles="$(SolidTemplatesSource)\Drenagem_1 2.xlsx" DestinationFolder="$(PetrobrasBundleResourcesDir)\Quantitativos" Condition="Exists('$(SolidTemplatesSource)\Drenagem_1 2.xlsx')" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="true" ContinueOnError="WarnAndContinue" />
+    <Copy SourceFiles="$(SolidTemplatesSource)\TEMPLATE SÓLIDOS 2026\ARQUIVOS VERSAO MAIS RECENTE TEMPLATE SÓLIDOS FEV_2026\IfcMapping.json" DestinationFolder="$(PetrobrasBundleResourcesDir)\ARQUIVOS IFC" Condition="Exists('$(SolidTemplatesSource)\TEMPLATE SÓLIDOS 2026\ARQUIVOS VERSAO MAIS RECENTE TEMPLATE SÓLIDOS FEV_2026\IfcMapping.json')" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="true" ContinueOnError="WarnAndContinue" />
   </Target>
 </Project>
