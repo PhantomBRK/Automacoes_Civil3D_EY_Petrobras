@@ -1,637 +1,436 @@
-# ERGECivil3DPlugin — AutomacoesCivil3D (Diretrizes Petrobras)
+# ERGECivil3DPlugin --- AutomacoesCivil3D (Diretrizes Petrobras) {#ergecivil3dplugin-automacoescivil3d-diretrizes-petrobras}
 
-O **ERGECivil3DPlugin** (implementado no projeto **AutomacoesCivil3D**) é uma
-solução de engenharia de software de alta performance, concebida para atuar como
-o braço tecnológico estratégico na implementação de processos BIM dentro do
-ecossistema de infraestrutura industrial da Petrobras.
+O **ERGECivil3DPlugin** (implementado no projeto AutomacoesCivil3D) é uma solução de engenharia de software de alta performance, concebida para atuar como o braço tecnológico estratégico na implementação de processos BIM dentro do ecossistema de infraestrutura industrial da Petrobras e de grandes parceiros do setor de infraestrutura (como Vale, DNIT, Houer, Pavelar, entre outros).
 
-Desenvolvido sobre a arquitetura moderna do **.NET 8** e utilizando o poder da
-linguagem **C#**, este plugin estende as capacidades nativas do **Autodesk
-Civil 3D** (2025 e 2026+), transformando fluxos de trabalho tradicionais em
-processos automatizados, precisos e orientados a metadados.
+Desenvolvido sobre a arquitetura moderna do **.NET 8** (net8.0-windows7.0) e utilizando o poder da linguagem **C# 14.0**, este plugin estende as capacidades nativas do **Autodesk Civil 3D (versões 2025 e 2026+)**, transformando fluxos de trabalho tradicionais em processos automatizados, precisos e orientados a metadados.
 
-A solução foi arquitetada para enfrentar os desafios críticos da engenharia de
-infraestrutura, consolidando-se em pilares fundamentais:
+A solução foi arquitetada para enfrentar os desafios críticos da engenharia de infraestrutura, consolidando-se em quatro pilares fundamentais:
 
-- **Extração Inteligente de Sólidos 3D:** coordenação multidisciplinar de
-  elementos complexos de infraestrutura e drenagem.
-- **Dimensionamento Hidráulico e Diagnóstico de Rede:** verificação de seção por
-  Manning, conexão automática e diagnóstico de conectividade/vazão da rede de
-  drenagem em sólidos.
-- **Processamento Geométrico Avançado de Superfícies:** algoritmos para extração
-  de quantitativos (QTO) de terraplenagem e pavimentação.
-- **Quantitativos Estruturados (QTO/SMEC):** geração de quantitativos
-  parametrizados em caixas, tubos e canaletas, gravados no `.sbd` e exportados
-  para relatórios e IFC.
-- **Gestão de Metadados e Property Sets:** modelagem da informação sob o padrão
-  AWP (Advanced Work Packaging) e regras de governança de dados.
-- **Interoperabilidade IFC:** exportação e mapeamento nativo via ecossistema
-  robusto **Xbim 6.0**, com suporte a **IFC4** e **IFC4x3**, incluindo o fluxo
-  **LOIN** (Level of Information Need).
+1.  **Extração Inteligente de Sólidos 3D:** Coordenação multidisciplinar de elementos complexos de infraestrutura, corredores e redes de drenagem.
 
-Ao unificar interfaces de usuário sofisticadas em **WPF** com a robustez da
-AutoCAD/Civil 3D .NET API, o projeto assegura eficiência operacional e total
-conformidade com os manuais de entrega técnica e padrões normativos da Petrobras.
+2.  **Processamento Geométrico Avançado de Superfícies:** Algoritmos para extração de quantitativos (QTO) de terraplenagem e pavimentação.
 
----
+3.  **Gestão de Metadados e Property Sets:** Modelagem da informação sob o padrão AWP (*Advanced Work Packaging*) e regras de governança de dados.
 
-## 1. Visão Geral e Stack Técnica
+4.  **Interoperabilidade IFC:** Exportação e mapeamento nativo via ecossistema robusto **Xbim 6.0**, garantindo total compatibilidade com o formato **IFC4x3** e integração com os requisitos de LOIN (Level of Information Need).
 
-O projeto foi construído para ser resiliente a mudanças de versão de APIs
-proprietárias, isolando a lógica de negócios da dependência direta de uma única
-versão do AutoCAD Civil 3D.
+Ao unificar interfaces de usuário sofisticadas em **WPF/WinForms** com a robustez da **AutoCAD/Civil 3D .NET API**, o projeto assegura eficiência operacional e total conformidade com os manuais de entrega técnica e padrões normativos nacionais.
 
-### 🛠️ Stack e Frameworks
+## 1. Visão Geral e Stack Técnica {#visão-geral-e-stack-técnica}
 
-| Item | Valor | Observação |
-|------|-------|------------|
-| Target Framework | `net8.0-windows8.0` | `SupportedOSPlatformVersion` 8.0; compatível com Civil 3D 2025 e 2026+ |
-| Linguagem | C# (.NET 8) | Recursos de produtividade modernos (pattern matching, collection expressions) |
-| UI Engine | WPF & WinForms | MVVM para janelas flutuantes e Palettes nativas para AutoCAD |
-| Arquitetura UI | MVVM / SOA | Desacoplamento entre lógica de engenharia e renderização de interface |
-| Plataforma | **x64** | Civil 3D é x64-only em runtime (o csproj também declara `AnyCPU;x64;ARM64;x86`, mas o debug real é x64) |
-| Versões Suportadas | Civil 3D 2025 & 2026 | Referências do SDK resolvidas via propriedade `AcadDir` |
+O projeto foi construído para ser resiliente a mudanças de versão de APIs proprietárias, isolando a lógica de negócios da dependência direta de uma única versão do AutoCAD Civil 3D.
 
----
+### 🛠️ Stack e Frameworks {#stack-e-frameworks}
 
-## 2. Gerenciamento de Dependências
+| **Item** | **Valor** | **Observação** |
+|----|----|----|
+| **Target Framework** | net8.0-windows7.0 | Compatibilidade garantida com Civil 3D 2025 e 2026+ |
+| **Linguagem** | C# 14.0 | Uso de recursos de produtividade modernos (pattern matching avançado, collection expressions) |
+| **UI Engine** | WPF & WinForms | MVVM para janelas flutuantes, Windows Forms para diálogos rápidos e Palettes nativas para AutoCAD |
+| **Arquitetura UI** | MVVM / SOA | Desacoplamento rígido entre lógica de engenharia e renderização de interface |
+| **Plataforma** | x64 | Civil 3D não oferece suporte para arquiteturas AnyCPU |
+| **Versões Suportadas** | Civil 3D 2025 & 2026 | Arquitetura preparada para transições de APIs subsequentes |
 
-Para evitar a fragmentação de versões de pacotes em soluções complexas, o projeto
-utiliza o **Central Package Management (CPM)** por meio de um arquivo centralizado
-de propriedades.
+## 2. Gerenciamento de Dependências {#gerenciamento-de-dependências}
 
-### 2.1. Configuração CPM (`Directory.Packages.props`)
+Para evitar a fragmentação de versões de pacotes em soluções complexas, o projeto utiliza o **Central Package Management (CPM)** por meio de um arquivo centralizado de propriedades.
 
-Versões reais declaradas centralmente no projeto:
+### 2.1. Configuração CPM (Directory.Packages.props) {#configuração-cpm-directory.packages.props}
 
-```xml
-<Project>
-  <PropertyGroup>
-    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-  </PropertyGroup>
-  <ItemGroup>
-    <!-- Mapeamento e Interoperabilidade IFC (Xbim) -->
-    <PackageVersion Include="Xbim.Common"          Version="6.0.578" />
-    <PackageVersion Include="Xbim.Essentials"      Version="6.0.578" />
-    <PackageVersion Include="Xbim.Ifc"             Version="6.0.578" />
-    <PackageVersion Include="Xbim.Ifc2x3"          Version="6.0.578" />
-    <PackageVersion Include="Xbim.Ifc4"            Version="6.0.578" />
-    <PackageVersion Include="Xbim.Ifc4x3"          Version="6.0.578" />
-    <PackageVersion Include="Xbim.IO.Esent"        Version="6.0.578" />
-    <PackageVersion Include="Xbim.IO.MemoryModel"  Version="6.0.578" />
-    <PackageVersion Include="Xbim.Geometry.Engine.Interop" Version="5.1.820" />
+Todas as versões de pacotes gerenciados do ecossistema do plugin são declaradas de forma centralizada:
 
-    <!-- Manipulação de Planilhas e Relatórios -->
-    <PackageVersion Include="EPPlus"               Version="8.5.0" />
-    <PackageVersion Include="EPPlus.Interfaces"    Version="8.4.0" />
-    <PackageVersion Include="ClosedXML"            Version="0.105.0" />
-    <PackageVersion Include="ExcelDataReader"      Version="3.8.0" />
-    <PackageVersion Include="ExcelDataReader.DataSet" Version="3.8.0" />
+\<Project\>\
+\<PropertyGroup\>\
+\<ManagePackageVersionsCentrally\>true\</ManagePackageVersionsCentrally\>\
+\</PropertyGroup\>\
+\<ItemGroup\>\
+\<!\-- Mapeamento e Interoperabilidade IFC (Xbim) \--\>\
+\<PackageVersion Include=\"Xbim.Common\" Version=\"6.0.578\" /\>\
+\<PackageVersion Include=\"Xbim.Essentials\" Version=\"6.0.578\" /\>\
+\<PackageVersion Include=\"Xbim.Ifc\" Version=\"6.0.578\" /\>\
+\<PackageVersion Include=\"Xbim.Ifc4\" Version=\"6.0.578\" /\>\
+\<PackageVersion Include=\"Xbim.IO.Esent\" Version=\"6.0.578\" /\>\
+\<PackageVersion Include=\"Xbim.IO.MemoryModel\" Version=\"6.0.578\" /\>\
+\
+\<!\-- Manipulação de Planilhas e Relatórios \--\>\
+\<PackageVersion Include=\"EPPlus\" Version=\"8.5.0\" /\>\
+\<PackageVersion Include=\"ClosedXML\" Version=\"0.105.0\" /\>\
+\<PackageVersion Include=\"ExcelDataReader\" Version=\"3.8.0\" /\>\
+\
+\<!\-- Parser e Utilitários de Terceiros \--\>\
+\<PackageVersion Include=\"HtmlAgilityPack\" Version=\"1.11.x\" /\>\
+\<PackageVersion Include=\"ICSharpCode.Decompiler\" Version=\"8.x\" /\>\
+\<PackageVersion Include=\"Newtonsoft.Json\" Version=\"13.0.3\" /\>\
+\<PackageVersion Include=\"Microsoft.Extensions.Options\" Version=\"8.0.2\" /\>\
+\<PackageVersion Include=\"CommunityToolkit.Mvvm\" Version=\"8.2.2\" /\>\
+\</ItemGroup\>\
+\</Project\>
 
-    <!-- Parser e Utilitários de Terceiros -->
-    <PackageVersion Include="HtmlAgilityPack"      Version="1.12.4" />
-    <PackageVersion Include="ICSharpCode.Decompiler" Version="9.1.0.7988" />
-    <PackageVersion Include="Microsoft.Extensions.Options" Version="8.0.2" />
-    <PackageVersion Include="Microsoft.VisualBasic" Version="10.3.0" />
-  </ItemGroup>
-</Project>
-```
+### 2.2. Referências Locais do SDK (Autodesk) e Arquivos de Apoio {#referências-locais-do-sdk-autodesk-e-arquivos-de-apoio}
 
-> `Newtonsoft.Json` é consumido como `<Reference>` local (DLL), não via CPM.
+Estas bibliotecas são mapeadas a partir da pasta de instalação padrão da Autodesk (C:\Program Files\Autodesk\AutoCAD 2026\\.
 
-### 2.2. Referências Locais do SDK (Autodesk) e Arquivos de Apoio
+> ⚠️ **Importante:** Sempre configure a propriedade \<Private\>False\</Private\> (*Copy Local = False*) nestas referências para evitar o empacotamento de DLLs nativas do Civil 3D, o que gera falhas graves de carregamento de tipo (*Type Load Exceptions*) em tempo de execução.
 
-Estas bibliotecas são mapeadas a partir da pasta de instalação padrão da Autodesk
-(`C:\Program Files\Autodesk\AutoCAD 2026\`, via propriedade `AcadDir`, com os
-subdiretórios `C3D\`, `ACA\` e `Map\`).
+- **AcCoreMgd.dll / AcDbMgd.dll / AcMgd.dll**: Núcleo da API AutoCAD.
 
-> ⚠️ **Importante:** sempre configure `<Private>False</Private>` (Copy Local =
-> False) nessas referências, para evitar o empacotamento de DLLs nativas do
-> Civil 3D — o que gera falhas graves de carregamento de tipo (*Type Load
-> Exceptions*) em tempo de execução.
+- **AeccDbMgd.dll**: Banco de dados e manipulação de entidades de infraestrutura do Civil 3D (Alinhamentos, Corredores, Redes de Pressão e Gravidade).
 
-- **`accoremgd.dll` / `acdbmgd.dll` / `acmgd.dll` / `acdbmgdbrep.dll`:** núcleo da API AutoCAD.
-- **`AeccDbMgd.dll`:** banco de dados e manipulação de entidades de infraestrutura do Civil 3D (Alinhamentos, Corredores, Redes de Pressão e Gravidade).
-- **`AecBaseMgd.dll` / `AecPropDataMgd.dll`:** motor de metadados, dicionários de extensão e Property Sets.
-- **`Autodesk.Gis.Map.*` / `OSGeo.FDO` / `OSGeo.MapGuide.*`:** camada Map/GIS.
-- **`SOLIDOS_2025.dll`:** biblioteca de interoperabilidade do plugin terceirizado **SOLIDOS** para controle de drenagem (referenciada a partir de `%AppData%\...\SOLIDOS.bundle\dotnet_8\`).
-- **`Microsoft.Office.Interop.Excel.dll`:** biblioteca local para fluxos legados de exportação direta do Excel.
+- **AecBaseMgd.dll / AecPropDataMgd.dll**: Motor de metadados, dicionários de extensão e Property Sets.
 
----
+- **AecModelerMgd.dll**: Algoritmos de modelagem geométrica de sólidos e massas 3D.
 
-## 3. Estrutura da Solução (Árvore de Projeto)
+- **SOLIDOS.dll**: Biblioteca de interoperabilidade do plugin terceirizado SOLIDOS para controle de drenagem.
 
-Organização real de arquivos e pastas do projeto ativo
-(`Rotinas Petrobras\AutomacoesCivil3D.csproj`), otimizada para desacoplamento e
-portabilidade de módulos:
+- **Microsoft.Office.Interop.Excel.dll** (armazenado em refs/): Biblioteca local utilizada para fluxos legados de exportação direta do Excel.
 
-```
-Solution 'RotinasPetrobras' (ERGECivil3DPlugin)
-├── Directory.Packages.props          # Gerenciamento Centralizado de Versões (CPM)
-├── App.config                        # Redirecionamentos de Binding de Assemblies
-└── AutomacoesCivil3D (Project)
-    ├── Properties/                    # Configurações de Assembly e Recursos
-    ├── Resources/                     # Ícones de Ribbon, logos e imagens
-    │
-    ├── Automacoes_Solidos/            # Drenagem em Sólidos (Petrobras N-0038)
-    │   ├── AjusteConexoesMontante.cs / AjusteConexoesJusante.cs   # Conexão de rede por sentido
-    │   ├── AjusteConexõesMontanteJusante.cs                       # Conexão por âncora bidirecional
-    │   ├── DimensionamentoDrenagem.cs                             # Verificação/dimensionamento (Manning)
-    │   ├── SolidosDimensionarRedeJusante.cs                       # Dimensionamento percorrendo por jusante
-    │   ├── DiagnosticoTubo.cs / DiagnosticoConectores.cs          # Diagnóstico de rede
-    │   ├── SolidosDiagnosticarConectividade.cs                    # Diagnóstico de conectividade
-    │   ├── HidraulicaSolidos.cs / HidraulicaCircularDren.cs       # Núcleo hidráulico (seção/lâmina)
-    │   ├── SolidosVazaoCombateIncendio.cs                         # Vazão de combate a incêndio
-    │   ├── AjustarConexoesCanaletas.cs                            # Sincronismo de cruzetas/canaletas
-    │   ├── CatalogoTuboPadrao.cs                                  # Catálogo de DN comerciais
-    │   └── OsnapPresents.cs / SolidosShowroomPetrobras.cs         # Snaps e showroom de peças
-    │
-    ├── IFC/                           # Interoperabilidade BIM (Motor Xbim — IFC4 / IFC4x3)
-    │   ├── IfcInfraConfigEditorWindow.xaml(.cs)                   # Painel administrativo WPF para IFC
-    │   ├── IfcAplicarMapeamentoJson.cs / IfcMappingReader.cs      # Mapeamento de PSets via JSON
-    │   ├── IfcDrainagePsetSeeder.cs / IfcRoadworksPsetSeeder.cs   # Seed de PSets (drenagem/rodoviário)
-    │   ├── IfcSolidosDrainageBinder.cs                            # Vínculo de PSets aos sólidos de drenagem
-    │   ├── QUANTITIES_IFC.cs                                      # QTO/SMEC no IFC
-    │   ├── Pos_Process_PAV.cs / Pos_Process_DRE.cs / Pos_Process_Ifc4x0.cs  # Pós-processamento 4x3
-    │   └── XbimServiceBootstrap.cs                                # Inicialização de sessões Xbim
-    │
-    ├── LOIN/                          # Level of Information Need (fluxo completo)
-    │   ├── LoinFluxoCompletoWindow.xaml(.cs) / LoinFluxoOrchestrator.cs
-    │   ├── LoinMapeamentoWindow.xaml(.cs) / LoinMapeamentoModels.cs
-    │   ├── LoinProjetoWindow.xaml(.cs)
-    │   ├── LoinIfcExportMappingLinker.cs                          # Vínculo LOIN ↔ exportação IFC
-    │   └── LoinTrpExtratorSuperficie.cs / LoinTrpValidador.cs     # Extração/validação TRP
-    │
-    ├── EXTRAIR_SOLIDOS_CORREDORES/    # Modelagem linear avançada (sólidos de corredor)
-    │   ├── ExportacaoSolidosCorredores.cs / ...Service.cs / ...Window.xaml
-    │   ├── CRIA_BOUNDARY_CORREDORES.cs / DELETAR_PONTAS_AL.cs
-    │   ├── EDITAR_FREQUENCIA_CORREDOR.cs                          # Inserção de seções em curvas
-    │   └── CodeNameMappingCatalog.cs                              # Catálogo de code names de corredor
-    │
-    ├── Rotinas DNIT/                  # Exportação IFC de corredores e PSets de sinalização
-    │   ├── CorridorIfcExporter.cs / IfcInfraExportHelper.cs
-    │   ├── CorridorPropertySetsCreator.cs / PSETSSINALIZACAO.cs
-    │   └── SL_CORREDOR_PARAMETRIZADO.cs
-    │
-    ├── Rotinas_PropertySets/          # Gestão e Modelagem de Atributos (AWP)
-    │   ├── PsetViewerControl.cs / PsetWizardForm.cs               # Palete e assistente de PSets
-    │   ├── PsetJsonExportImport.cs                                # Export/import de PSets em JSON
-    │   ├── CascataPSets.cs                                        # Filtros de seleção dependentes
-    │   └── PsetsDrenagem.cs / PsetsSinalização.cs
-    │
-    ├── TesteClonePsets/               # Snapshot e clonagem de Property Sets
-    │   └── PsetSnapshotService.cs / PsetSnapshotImportService.cs
-    │
-    ├── Rotinas Vale/                  # Instrumentação de monitoramento geotécnico
-    │   ├── Piezometros.cs / Inclinometros.cs / Pluviometros.cs
-    │   ├── MedidorNivelDagua.cs / Tiltimetro.cs
-    │   └── PolylinesPorZonaExcel.cs
-    │
-    ├── Rotinas PAvelar/               # Fluxo REURB (planilha → PSets)
-    │   └── PSETS_REURB.cs / ReurbPlanilhaUI.cs
-    │
-    ├── Rotinas Houer/                 # Rotinas de superfície/corredor (EPL) e relatórios
-    │   ├── Manager.cs                                             # Singleton de Contexto Ativo
-    │   ├── ClassePrincipal.cs                                    # Ponto de Entrada (IExtensionApplication)
-    │   └── RelatorioPsetsXlsx.cs / Substituir_Taludes_EPL.cs
-    │
-    ├── Rotinas Petrobras/             # Comandos Petrobras (drenagem, escavação, QTO)
-    │   ├── Main.cs                                               # Registro de comandos
-    │   ├── RotinaSuperfícieEscavaçãoDRE.cs                       # Projeção de taludes de valas
-    │   ├── MemoriaCalculoDrenagemCommand.cs                      # Memória de cálculo
-    │   └── SolQuantCaixas.cs / SolQuantTubos.cs / SolQuantCanal.cs ...  # Quantitativos
-    │
-    ├── Superficies/                   # Processamento geométrico de malhas
-    │   └── EXTRAIR_SOLIDOS.cs
-    │
-    ├── SOL_SECAO_BUEIRO.cs / SOL_SPIKE_PROJECAO.cs               # Seção e projeção de bueiros
-    ├── SolAjustarBueiroDnit.cs / SolDiagBueiroDnit.cs           # Ajuste/diagnóstico de bueiro (DNIT)
-    ├── AddVariaveisGlobaisQtoSmecCaixa.cs / AddQtoSmecCanaleta.cs # Variáveis globais QTO/SMEC
-    ├── RibbonSolidosUltimos.cs / SOLIDOS_QTO.cuix               # Ribbon do plugin
-    ├── EXTRAIR_SOLIDOS_SUPERFICIES.cs / LIMPARTRIAGULACAOSUPERFICIES.cs
-    └── CodesSpecific.cs                                          # Mapeador de códigos (pontos/links/formas)
-```
+## 3. Estrutura da Solução (Árvore de Projeto) {#estrutura-da-solução-árvore-de-projeto}
 
-> A pasta `PastaSolidosCorredoresNovaInterfaceLogicaAntiga/` é **excluída do
-> build** (`<Compile Remove>`) e mantida apenas como referência histórica.
+Abaixo é apresentada a organização real e completa do repositório Git, otimizada para o desenvolvimento integrado de todas as vertentes corporativas:
 
----
+Automacoes_Civil3D_EY_Petrobras/ (Git Root)\
+├── .gitignore \# Configuração de arquivos ignorados no Git\
+├── CLAUDE.md \# Guia rápido de comandos e atalhos de compilação\
+├── README.md \# Resumo de funcionalidades e introdução ao plugin\
+└── Rotinas Petrobras/ (Main Project Root)\
+├── App.config \# Redirecionamentos de Binding de Assemblies\
+├── AutomacoesCivil3D.csproj \# Projeto principal MSBuild (.NET 8)\
+├── AutomacoesCivil3D.sln \# Arquivo de Solução primário\
+├── RotinasPetrobras.sln \# Solução unificada de rotinas corporativas\
+├── Directory.Packages.props \# Gerenciamento Centralizado de Versões (CPM)\
+├── SOLID_QTO.cuix \# Customização de menus, barras de ferramentas e Ribbon do AutoCAD\
+├── build_cuix.ps1 \# Script PowerShell para geração e deploy do arquivo .cuix\
+├── launch.json \# Configuração de debug do Visual Studio Code\
+│\
+├── refs/ \# DLLs Locais de Interoperabilidade\
+│ └── Microsoft.Office.Interop.Excel.dll\
+│\
+├── Properties/ \# Configurações de Assembly e Recursos\
+│\
+├── Resources/ \# Arquivos de apoio, ícones de Ribbon, blocos e templates\
+│\
+├── Automacoes_Solidos/ \# Módulo de Automações de Drenagem (Petrobras N-0038)\
+│ ├── AjusteConexoesJusante.cs \# Correção de declividade e cotas de fundo\
+│ ├── OsnapPresents.cs \# Snap points para agilizar desenho técnico\
+│ └── SolidosShowroomPetrobras.cs \# Visualizador e inserção de peças padronizadas\
+│\
+├── EXTRAIR_SOLIDOS_CORREDORES/ \# Modelagem Linear Avançada (Corredores)\
+│ ├── ExportacaoSolidosCorredores.cs \# Varredura de seções transversais para sólidos 3D\
+│ ├── SPLITCORRIDORREGIONS.cs \# Divisão automatizada de regiões com base em marcos\
+│ └── EDITAR_FREQUENCIA_CORREDOR.cs \# Ajustes de inserção de seções em curvas\
+│\
+├── Formularios/ \# Telas e interfaces de usuário WinForms/WPF gerais\
+│\
+├── IFC/ \# Interoperabilidade BIM IFC4x3 (Motor Xbim)\
+│ ├── IfcAplicarMapeamentoJson.cs \# Deserializador de esquemas de mapeamento\
+│ ├── IfcInfraConfigEditorWindow.xaml \# Painel administrativo WPF para IFC\
+│ ├── IfcDrainagePsetSeeder.cs \# Injeção de propriedades IFC em redes de tubos\
+│ └── XbimBootstrap.cs \# Inicializador de instâncias e sessões XBIM\
+│\
+├── LOIN/ \# Requisitos de Nível de Informação Necessária (Level of Information Need)\
+│\
+├── ROTINAS TESTE/ \# Testes unitários, de integração e validações rápidas\
+│\
+├── Rotinas DNIT/ \# Regras de modelagem, relatórios e bueiros padrão DNIT\
+│ ├── SolAjustarBueiroDnit.cs\
+│ └── SolDiagBueiroDnit.cs\
+│\
+├── Rotinas Houer/ \# Customizações técnicas para projetos do parceiro Houer\
+│\
+├── Rotinas PAvelar/ \# Customizações e preenchimento de pranchas para P.Avelar\
+│ └── PreechimentoPranchaP.Avelar.cs\
+│\
+├── Rotinas Petrobras/ \# Rotinas operacionais gerais e padrões da Petrobras\
+│ ├── CriaLayers.cs\
+│ └── InstaladorTemplate.cs\
+│\
+├── Rotinas Vale/ \# Módulos específicos de modelagem e metadados para contratos Vale\
+│\
+├── Rotinas_PropertySets/ \# Gestão e Modelagem de Atributos do AutoCAD (AWP)\
+│ ├── PsetViewerControl.cs \# Palete lateral do AutoCAD para auditoria de dados\
+│ ├── PsetWizardForm.cs \# Assistente para preenchimento de Property Sets\
+│ └── CascataPSets.cs \# Filtros de seleção dependentes\
+│\
+├── Superficies/ \# Módulo de Processamento Geométrico de Malhas\
+│ ├── EXTRAIR_SOLIDOS.cs \# Geração de sólidos a partir de triangulações\
+│ └── LIMPARTRIAGULACAOSUPERFICIES.cs \# Algoritmo de limpeza de triângulos externos à fronteira\
+│\
+├── TesteClonePsets/ \# Utilitário de testes para clonagem de Property Sets\
+│\
+├── RotinasEstruturasDrenagem/ \# Lógicas dedicadas a estruturas complexas de drenagem\
+│\
+├── CodesSpecific.cs \# Mapeador de códigos de pontos, links e formas (Corridors)\
+├── InterfaceRotinaCriaPV.cs \# UI de criação assistida de Poços de Visita\
+├── PranchaAutomatica.cs \# Gerador semiautomático de pranchas de desenho\
+├── QtoSuperficiesCommand.cs \# Comando de registro de QTO de superfícies\
+├── QtoSuperficiesService.cs \# Serviço de cálculo e cubagem de materiais\
+├── QtoSuperficiesWindow.xaml \# Painel WPF MVVM de configuração do QTO\
+│\
+├── COMANDOS E ENTRADAS DE QUANTITATIVOS (SMEC/Petrobras)\
+│ ├── AddQtoSmecCanaleta.cs \# Cálculo específico SMEC para canaletas de drenagem\
+│ ├── AddQtoSmecEmLote.cs \# Processamento em lote de planilhas de quantitativos\
+│ ├── AddQuantitativosCaixa.cs \# Cubagem de concreto e escavação para caixas de drenagem\
+│ ├── AddVariaveisGlobaisQtoSmecCaixa.cs\
+│ ├── AddConectoresAsDynamicProperty.cs\
+│ └── AddConectoresParametricos.cs
 
-## 4. Padrões de Projeto e Convenções de Código
+## 4. Padrões de Projeto e Convenções de Código {#padrões-de-projeto-e-convenções-de-código}
 
-Para garantir a legibilidade técnica e a escalabilidade por múltiplos engenheiros
-de software, a solução adota convenções estritas.
+Para garantir a legibilidade técnica e a escalabilidade por múltiplos engenheiros de software, a solução adota convenções estritas.
 
-### 4.1. Convenções Linguísticas e Comunicação
+### 4.1. Convenções Linguísticas e Comunicação {#convenções-linguísticas-e-comunicação}
 
-- **Interface e Mensagens:** mensagens impressas no console do AutoCAD via
-  `Editor.WriteMessage()`, caixas de diálogo, logs e comentários de código devem
-  ser em **Português (PT-BR)**, incluindo acentuação correta.
-- **Nomenclatura de Comandos:** comandos registrados com a diretiva
-  `[CommandMethod("NOME_COMANDO")]` devem usar termos técnicos claros (os comandos
-  de sólidos/drenagem seguem o prefixo `SOL_`).
+- **Interface e Mensagens:** Mensagens impressas no console do AutoCAD via Editor.WriteMessage(), caixas de diálogo, logs e comentários de código devem ser em **Português (PT-BR)**, incluindo acentuação correta.
 
-### 4.2. Padrão de Gerenciamento de Contexto (`Manager.cs`)
+- **Nomenclatura de Comandos:** Comandos registrados com a diretiva \[CommandMethod(\"NOME_COMANDO\")\] devem ser em caixa alta e utilizar termos técnicos claros.
 
-Evita-se o acoplamento de chamadas estáticas do sistema operacional através do uso
-do Singleton `Manager`. Todo acesso ao documento ativo do Civil 3D deve seguir
-este padrão:
+### 4.2. Padrão de Gerenciamento de Contexto (Manager.cs) {#padrão-de-gerenciamento-de-contexto-manager.cs}
 
-```csharp
-using Autodesk.AutoCAD.ApplicationServices;
-using Autodesk.Civil.ApplicationServices;
+Todo acesso ao documento ativo do Civil 3D deve centralizar-se no uso do Singleton Manager:
 
-public sealed class Manager
-{
-    private static readonly Manager _instance = new Manager();
-    public static Manager Instance => _instance;
-
-    public static CivilDocument DocCivil => CivilApplication.ActiveDocument;
-    public static Document      DocCad   => Application.DocumentManager.MdiActiveDocument;
-    public static Database      DocData  => DocCad.Database;
-    public static Editor        DocEditor => DocCad.Editor;
+using Autodesk.AutoCAD.ApplicationServices;\
+using Autodesk.Civil.ApplicationServices;\
+\
+public sealed class Manager\
+{\
+private static readonly Manager \_instance = new Manager();\
+public static Manager Instance =\> \_instance;\
+\
+public static CivilDocument DocCivil =\> CivilApplication.ActiveDocument;\
+public static Document DocCad =\> Application.DocumentManager.MdiActiveDocument;\
+public static Database DocData =\> DocCad.Database;\
+public static Editor DocEditor =\> DocCad.Editor;\
 }
-```
 
-### 4.3. Padrão de Escopo de Transações
+### 4.3. Padrão de Escopo de Transações {#padrão-de-escopo-de-transações}
 
-Para evitar corrupção do banco de dados do AutoCAD (`Database`) e garantir que
-transações falhas voltem ao estado original sem causar *crashes*, utiliza-se a
-declaração `using` simplificada:
+Para assegurar que transações falhas voltem ao estado original sem causar travamento (*crashes*) no Civil 3D, utiliza-se o bloco using simplificado do C#:
 
-```csharp
-public void ExecutarOperacao()
-{
-    var db = Manager.DocData;
-    using var trans = db.TransactionManager.StartTransaction();
-
-    try
-    {
-        // Operações no Banco de Dados do AutoCAD...
-        trans.Commit();
-    }
-    catch (System.Exception ex)
-    {
-        Manager.DocEditor.WriteMessage($"\n[ERRO] Operação cancelada: {ex.Message}");
-        // O Rollback é implícito ao sair do escopo sem chamar o Commit()
-    }
+public void ExecutarOperacao()\
+{\
+var db = Manager.DocData;\
+using var trans = db.TransactionManager.StartTransaction();\
+\
+try\
+{\
+// Operações no Banco de Dados do AutoCAD\...\
+\
+trans.Commit();\
+}\
+catch (System.Exception ex)\
+{\
+Manager.DocEditor.WriteMessage(\$\"\n\[ERRO\] Operação cancelada: {ex.Message}\");\
+}\
 }
-```
-
-### 4.4. Glossário Técnico
-
-| Termo em Português | Termo Técnico Autodesk | Aplicação no Plugin |
-|--------------------|------------------------|---------------------|
-| Corredor | `Corridor` | Modelagem de vias de acesso industriais |
-| Superfície | `TinSurface` / `Surface` | Malhas de terreno primitivo e terraplenagem |
-| Estrutura / PV | `Structure` | Poços de Visita e Caixas de Passagem de drenagem |
-| Rede | `PipeNetwork` | Rede coletora de gravidade |
-| Alinhamento | `Alignment` | Eixo de referência horizontal |
-| Perfil | `Profile` | Eixo de referência vertical (greide) |
-| PSet | `PropertySet` | Metadados atribuídos a objetos no AutoCAD |
-| Cruzeta / Canaleta | Entidades personalizadas / Sólidos | Dispositivos de Drenagem Urbana e de Área Industrial |
-| Bueiro | Sólido + alas | Travessia de drenagem (regras DNIT) |
-
----
-
-## 5. Diretrizes Normativas: Petrobras N-0038 (Drenagem On-Site)
-
-As ferramentas presentes na pasta `Automacoes_Solidos` seguem os critérios
-geométricos e de vazão exigidos pela Norma Técnica **Petrobras N-0038** (Projeto
-de Drenagem de Áreas Industriais).
-
-### 5.1. Dimensionamento Hidráulico e Escoamento Superficial
-
-O plugin auxilia na verificação da capacidade de escoamento de canaletas e
-cruzetas sob regime de fluxo uniforme, aplicando a **Fórmula de Manning**:
-
-$$V = \frac{1}{n} \cdot R_h^{2/3} \cdot S^{1/2} \qquad Q = V \cdot A_m$$
-
-Onde:
-
-- $V$ — velocidade média do escoamento (m/s).
-- $n$ — coeficiente de rugosidade de Manning do material (ex.: concreto liso ≈ 0,013).
-- $R_h$ — raio hidráulico, razão entre a área molhada e o perímetro molhado: $R_h = A_m / P_m$.
-- $S$ — declividade de fundo da canaleta ou tubulação (m/m).
-- $A_m$ — área molhada da seção; $Q$ — vazão de escoamento (m³/s).
-
-### 5.2. Mapeamento de Vazão para Combate a Incêndio
-
-O módulo de drenagem fornece rotinas para mapeamento de áreas de contribuição de
-bacias, calculando a vazão de projeto combinando a vazão pluvial (método racional)
-e a vazão de água de combate a incêndio exigida para o cenário industrial:
-
-$$Q_{projeto} = Q_{pluvial} + Q_{inc\hat{e}ndio} \qquad Q_{pluvial} = \frac{C \cdot i \cdot A}{360}$$
-
-As estruturas (PVs e caixas) são marcadas com metadados indicando o atendimento
-aos limites de capacidade hidráulica previstos pela norma N-0038, impedindo
-transbordamentos e minimizando o risco de dispersão de contaminantes de processos
-químicos industriais.
-
-### 5.3. Comandos de Conexão, Dimensionamento e Diagnóstico
-
-| Comando | Função |
-|---------|--------|
-| `SOL_CONECTAR_REDE_POR_MONTANTE` / `_JUSANTE` / `_ANCHOR_BI` | Conecta automaticamente tubos e dispositivos da rede |
-| `SOL_DIMENSIONAR_DRENAGEM` | Verifica/dimensiona a rede a montante do âncora (Manning) |
-| `SOL_DIMENSIONAR_REDE_POR_JUSANTE` | Dimensionamento percorrendo a rede por jusante |
-| `SOL_SYNC_CRUZETA_CANALETAS` | Sincroniza cruzetas e canaletas |
-| `SOL_DIAG_TUBO` / `SOL_DIAG_CONECTORES` / `SOL_DIAGNOSTICAR_CONECTIVIDADE` | Diagnóstico de conectividade e vazão; apontam onde a rede se quebra |
-| `SOL_LISTAR_PROPS` / `SOL_LISTAR_TUBOS_FANTASMAS` / `SOL_DUMP_DISPOSITIVOS` | Inspeção de propriedades e diagnósticos |
-
-### 5.4. Travessias (Bueiros) — Regras DNIT
-
-| Comando | Função |
-|---------|--------|
-| `SOL_SECAO_BUEIRO` / `SOL_SECAO_BUEIROS` | Gera a seção do bueiro sobre o eixo (Section View) |
-| `SOL_SPIKE_PROJECAO` / `_PF` | Projeção do dispositivo na seção |
-| `SOL_DIAG_BUEIRO_DNIT` | Diagnóstico do bueiro frente às regras DNIT (recobrimento, declividade, comprimento pé-a-pé) — somente relatório |
-| `SOL_AJUSTAR_BUEIRO_DNIT` | Ajusta o bueiro e as alas ao terreno conforme as regras DNIT |
-
----
-
-## 6. Módulos Funcionais e Catálogo de Comandos
-
-O plugin expõe **~180 comandos** registrados via `[CommandMethod("...")]` — cada
-nome é o ponto de entrada no código. Abaixo, os módulos não detalhados na
-Seção 5.
-
-### 6.1. Quantitativos Estruturados (QTO / SMEC)
-
-| Comando | Função |
-|---------|--------|
-| `AddVariaveisGlobaisQtoSmecCaixa` | Cria as variáveis globais de QTO/SMEC em caixas |
-| `AddQtoSmecCanaleta` / `AddQtoSmecEmLote` | Aplica QTO/SMEC a canaletas e em lote |
-| `AddQuantitativosCaixa` / `AddConectoresParametricos` | Quantitativos e conectores paramétricos |
-| `SOL_PATCH_SBD_QTO_SMEC_ESTRUTURADO` | Grava quantitativos QTO/SMEC estruturados no `.sbd` |
-| `SOL_QUANT_CAIXAS` / `_TUBOS` / `_CANAL` / `_GERAL` / `_SMEC` / `_TUBOS_SMEC` / `_CANAL_SMEC` | Quantitativos da rede de drenagem |
-| `RelatorioSMECDRE` / `GerarRelatorioTubulacoes` | Relatórios de quantitativos |
-| `QTO_MATERIAIS_CSV` / `QTO_SUPERFICIES_TRP_PAV` / `QuantitativoSuperficies` | Quantitativos de materiais e superfícies |
-
-### 6.2. Interoperabilidade IFC (IFC4 / IFC4x3) e LOIN
-
-| Comando | Função |
-|---------|--------|
-| `EXPORTAR_IFC43_INFRA` / `EXPORTAR_IFC_CORREDORES` | Exporta IFC 4x3 de infraestrutura / corredores |
-| `IFC_CONFIG_INFRA` / `IFCEDITCONFIG` | Configuração do exportador IFC (painel WPF) |
-| `IFC_DEFINIR_PARAMETRO` / `IFC_APLICAR_PARAMETROS` / `IFC_APLICAR_MAPEAMENTO_JSON` | Parâmetros e mapeamento de PSets via JSON |
-| `IFC_CRIAR_PSETS_DRENAGEM` / `IFC_CRIAR_PSETS_RODOVIARIOS` | Cria Property Sets IFC (drenagem / rodoviários) |
-| `IFC_VINCULAR_PSETS_SOLIDOS_DRENAGEM` / `IFC_PREP_PIPENET_SOLIDS` | Vincula PSets aos sólidos de drenagem |
-| `SIFC_QTO_SMEC` / `SIFC_QTO_SMEC_IFC4` | Quantitativos QTO/SMEC embarcados no IFC |
-| `SIFC_DRE_POST_4X3` / `SIFC_PAV_POST_4X3` / `SIFC_PAV_TRANSFERIR_PSETS_4X3` | Pós-processamento IFC 4x3 (drenagem/pavimento) |
-| `LOIN_LINKAR_IFCEXPORT` / `_LOIN_TRP_EXTRAIR_SUPERFICIE` / `_LOIN_TRP_VALIDAR` | Fluxo LOIN: vínculo, extração e validação |
-
-### 6.3. Property Sets (AWP), Snapshot, REURB e Sinalização
-
-| Comando | Função |
-|---------|--------|
-| `AplicarPSet` / `AplicarPsetTodos` / `CRIA_PSETS_CORREDOR` | Aplica/cria Property Sets em objetos e corredores |
-| `PSET_EXPORTAR_JSON` / `PSET_IMPORTAR_JSON` | Export/import de PSets em JSON |
-| `EXPORTAR_SNAPSHOT_PSETS` / `IMPORTAR_SNAPSHOT_PSETS` / `CLONAR_PSETS_COPY` | Snapshot e clonagem de PSets entre desenhos |
-| `RELATORIO_PSET_XLSX` | Relatório de PSets em Excel |
-| `SINAL_PSET_APLICAR` / `SINAL_PSET_MAPEAR` | PSets de sinalização (DNIT) |
-| `REURB_IMPORT` / `REURB_IMPORT_APLICAR` / `REURB_XLS_APLICAR` / `ZONAS_POLY_XLS` | Fluxo REURB (planilha → PSets) |
-
-### 6.4. Corredores e Sólidos de Corredor
-
-| Comando | Função |
-|---------|--------|
-| `CRIA_SUP_CORRIDORES` / `CRIA_SUP_QTO_CORREDORES` / `SET_SURFTARGET_ALL_CORRIDORS` | Superfícies e targets de corredores |
-| `SPLITCORRIDORREGIONS` / `SPLITREG_ESTACA` / `APPLY_REGION_FREQS_ALL` | Regiões e frequências de corredor |
-| `AC3D_ExtractBoundaryFromCorridors_ALL` / `C3D_VOL_BOUNDARY_AUTOMATE` / `CROPSURF2DWG` | Boundaries e recorte de superfície |
-| `ExportarSolidosCorredores` / `ExportarSolidosCorredoresNovaInterface` / `EXSOLIDOSCORR_JSON` / `_LOIN` / `_NI` | Extração de sólidos de corredor |
-
-### 6.5. Instrumentação Geotécnica (Monitoramento)
-
-| Comando | Função |
-|---------|--------|
-| `PIEZOMETROS` | Inserção/locação de piezômetros |
-| `Inclinometros` / `Tiltimetro` / `Pluviometros` / `MedidorNivelDagua` | Demais instrumentos de monitoramento geotécnico |
-
-### 6.6. Superfícies, Escavação e Utilitários
-
-| Comando | Função |
-|---------|--------|
-| `EscavacaoDrenagem` / `CalcularEscavacao` / `CriarEscavacaoDRE` | Cálculo e modelagem de escavação (DRE) |
-| `RebuidSurface` / `TIN_NATIVO_PARA_MESH` / `CRIA_TILT` | Manipulação de superfícies TIN |
-| `MEMORIA_CALCULO_DRENAGEM` | Memória de cálculo de drenagem |
-| `SOL_RIBBON` / `RP_RIBBON` / `RP_UI` / `RP_UI_REFRESH` | Ribbon e interface do plugin (`SOLIDOS_QTO.cuix`) |
-| `ActivateCivilWorkspace` / `TrocarWS` / `ReiniciarCivil` | Ambiente / workspace |
-| `TutorialDre` / `TutorialPav` / `TutorialTrp` | Tutoriais embutidos |
-
----
-
-## 7. Guia de Manutenção e Migração Multi-versão (2025 → 2026+)
-
-O plugin foi projetado de forma que o suporte a novas versões anuais do Civil 3D
-exija o mínimo de alteração de código fonte, alterando apenas referências no nível
-de build do MSBuild.
-
-### 7.1. Condicionamento das Referências do `.csproj`
-
-O `.csproj` resolve as DLLs do SDK a partir da propriedade `AcadDir` (padrão:
-`C:\Program Files\Autodesk\AutoCAD 2026`), que pode ser sobrescrita por linha de
-comando. O alvo final do *deploy* é condicionado pela existência da pasta-bundle:
-
-```xml
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net8.0-windows8.0</TargetFramework>
-    <UseWpf>true</UseWpf>
-    <UseWindowsForms>true</UseWindowsForms>
-    <Platforms>AnyCPU;x64;ARM64;x86</Platforms>
-    <AcadDir Condition="'$(AcadDir)' == ''">C:\Program Files\Autodesk\AutoCAD 2026</AcadDir>
-    <CivilDir>$(AcadDir)\C3D</CivilDir>
-  </PropertyGroup>
-
-  <!-- Referências do SDK Autodesk (Copy Local = False) -->
-  <ItemGroup>
-    <Reference Include="accoremgd"><HintPath>$(AcadDir)\accoremgd.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="acdbmgd"><HintPath>$(AcadDir)\acdbmgd.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="acmgd"><HintPath>$(AcadDir)\acmgd.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="AeccDbMgd"><HintPath>$(AcadDir)\C3D\AeccDbMgd.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="AecBaseMgd"><HintPath>$(AcadDir)\ACA\AecBaseMgd.dll</HintPath><Private>False</Private></Reference>
-    <Reference Include="AecPropDataMgd"><HintPath>$(AcadDir)\ACA\AecPropDataMgd.dll</HintPath><Private>False</Private></Reference>
-  </ItemGroup>
-</Project>
-```
-
-> Para apontar para outra instalação (unidade `D:\`, rede etc.), sobrescreva
-> `AcadDir` no comando de build: `-p:AcadDir="D:\Autodesk\AutoCAD 2026"`.
-
-### 7.2. Manifesto do Pacote (`PackageContents.xml`)
-
-Para carregar o plugin automaticamente via tecnologia **Autoloader** da Autodesk:
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<ApplicationPackage SchemaVersion="1.0" Version="2026.1.0" Name="ERGE Civil 3D Plugin" AppCode="ERGE.Civil3D">
-  <RuntimeRequirements SeriesMin="R25.0" SeriesMax="R26.0" Platform="AutoCAD*" />
-  <Components>
-    <RuntimeEntry OS="Win64" Platform="Civil3D" SeriesMin="R25.0" SeriesMax="R26.0"
-                  AppName="AutomacoesCivil3D" ModuleName="./Contents/AutomacoesCivil3D.dll" />
-  </Components>
-</ApplicationPackage>
-```
-
-> `R25.0` = AutoCAD Civil 3D 2025 · `R26.0` = AutoCAD Civil 3D 2026.
-
----
-
-## 8. Pipeline de Build, Compilação e Deploy Automático
-
-### 8.1. Compilação via Linha de Comando
-
-> ⚠️ **Use o MSBuild do Visual Studio, não `dotnet build`.** O `.csproj` contém
-> `<COMReference>` (10 referências COM), que exigem a task `ResolveComReference`
-> do MSBuild full-framework; o CLI `dotnet build` falha com `error MSB4803`.
-
-```powershell
-# Build Debug x64
-& "C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe" `
-    "Rotinas Petrobras\AutomacoesCivil3D.csproj" `
-    -p:Configuration=Debug -p:Platform=x64 -restore -nologo -v:quiet
-
-# Build Release x64
-& "C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe" `
-    "Rotinas Petrobras\AutomacoesCivil3D.csproj" `
-    -p:Configuration=Release -p:Platform=x64 -restore -nologo -v:quiet
-```
-
-Se o Civil 3D estiver instalado em caminho personalizado, sobrescreva `AcadDir`:
-`-p:AcadDir="D:\Autodesk\AutoCAD 2026"`.
-
-### 8.2. Deploy de Teste Automatizado (Post-Build Target)
-
-Para acelerar o ciclo *code-build-test*, o `.csproj` possui uma tarefa
-pós-compilação (`DeployAutomacoesPetrobrasBundle`, `AfterTargets="Build"`) que
-copia os binários para a pasta monitorada pelo Autoloader **se o bundle existir**:
-
-```xml
-<Target Name="DeployAutomacoesPetrobrasBundle" AfterTargets="Build"
-        Condition="Exists('$(PetrobrasBundleDir)')">
-  <PropertyGroup>
-    <PetrobrasBundleDir>$(AppData)\Autodesk\ApplicationPlugins\AutomacoesPetrobras.bundle\Contents\</PetrobrasBundleDir>
-  </PropertyGroup>
-  <ItemGroup>
-    <OutputFiles Include="$(OutputPath)\**\*.*" />
-  </ItemGroup>
-  <Copy SourceFiles="@(OutputFiles)"
-        DestinationFiles="@(OutputFiles->'$(PetrobrasBundleDir)%(RecursiveDir)%(Filename)%(Extension)')"
-        SkipUnchangedFiles="true" />
-</Target>
-```
-
-> Após o build, basta **reabrir o Civil 3D** para recarregar o plugin a partir de
-> `%AppData%\Autodesk\ApplicationPlugins\AutomacoesPetrobras.bundle\`.
-
----
-
-## 9. Segurança de Código, Ofuscação e Distribuição
-
-A propriedade intelectual das rotinas de cálculo de volume de terraplenagem e
-regras de negócio industriais deve ser protegida antes da entrega técnica oficial.
-
-```
-[Código C# Compilado (Release)]
-            │
-            ▼
-   ┌─────────────────┐
-   │   .NET Reactor  │ ◄── Ofuscação de classes/métodos e criptografia de strings
-   └────────┬────────┘
-            ▼
-   ┌─────────────────┐
-   │  Assinatura     │ ◄── Certificado digital (evita bloqueios no AutoCAD)
-   │  Digital (Sign) │
-   └────────┬────────┘
-            ▼
-   ┌─────────────────┐
-   │   Inno Setup 6  │ ◄── Geração do pacote executável (.exe)
-   └─────────────────┘
-```
-
-### 9.1. Ofuscação com .NET Reactor
-
-As compilações `Release` aplicam, via .NET Reactor:
-
-- **Ofuscação de fluxo de controle:** impede que decompiladores (ILSpy, dnSpy)
-  decodifiquem algoritmos e fórmulas.
-- **Criptografia de strings:** oculta segredos e queries internas.
-- **Remoção de metadados públicos:** suprime assinaturas de membros internos
-  desnecessários à execução.
-
-### 9.2. Assinatura Digital do Assembly
-
-O assembly resultante (`AutomacoesCivil3D.dll`) deve ser assinado digitalmente com
-uma autoridade certificadora corporativa Petrobras ou AC raiz confiável pelo
-Windows, evitando alertas de "Editor Não Confiável" e bloqueios de segurança em
-máquinas de produção.
-
----
-
-## 10. Empacotamento e Geração do Instalador (Inno Setup)
-
-O processo de empacotamento reúne todos os arquivos de execução e dependências em
-um único instalador autônomo executável (`.exe`).
-
-### 10.1. Estrutura de Distribuição
-
-```
-%APPDATA%\Autodesk\ApplicationPlugins\AutomacoesPetrobras.bundle\
-├── PackageContents.xml          # Manifesto de carregamento (Autoloader)
-└── Contents/
-    ├── AutomacoesCivil3D.dll     # Assembly principal (ofuscado e assinado)
-    ├── Xbim.*.dll, EPPlus.dll, ClosedXML.dll, ...   # Dependências
-    └── Resources/
-        ├── Templates/            # Arquivos .dwt corporativos
-        ├── Stylesheets/          # Modelos .xsl para relatórios de QTO
-        └── Icons/                # Ícones da Ribbon de comandos
-```
-
-### 10.2. Script do Inno Setup (`erge-plugin-installer.iss`)
-
-```iss
-[Setup]
-AppName=ERGE Civil 3D Plugin
-AppVersion=2026.1.0
-AppPublisher=ERGE Petrobras Tech Team
-DefaultDirName={userappdata}\Autodesk\ApplicationPlugins\AutomacoesPetrobras.bundle
-DisableDirPage=yes
-OutputBaseFilename=Setup_ERGE_Civil3D_2026
-Compression=lzma
-SolidCompression=yes
-ArchitecturesInstallIn64BitMode=x64
-
-[Files]
-Source: "..\bundle\PackageContents.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\bin\Release\Contents\*"; DestDir: "{app}\Contents"; Flags: ignoreversion recursesubdirs
-Source: "..\bundle\Resources\*"; DestDir: "{app}\Resources"; Flags: ignoreversion recursesubdirs
-
-[Code]
-function IsCivil3D2025Installed(): Boolean;
-begin
-  Result := RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\Autodesk\AutoCAD\R25.0\ACAD-8100:409');
+
+### 4.4. Glossário Técnico {#glossário-técnico}
+
+| **Termo em Português** | **Termo Técnico Autodesk** | **Aplicação no Plugin** |
+|----|----|----|
+| **Corredor** | Corridor | Modelagem de vias de acesso industriais |
+| **Superfície** | TinSurface / Surface | Malhas de terreno primitivo e terraplenagem |
+| **Estrutura / PV** | Structure | Poços de Visita e Caixas de Passagem de drenagem |
+| **Rede** | PipeNetwork | Rede coletora de gravidade |
+| **Alinhamento** | Alignment | Eixo de referência horizontal |
+| **Perfil** | Profile | Eixo de referência vertical (greide) |
+| **PSet** | PropertySet | Metadados atribuídos a objetos no AutoCAD |
+| **Cruzeta / Canaleta** | Entidades personalizadas / Sólidos | Dispositivos de Drenagem Urbana e de Área Industrial |
+
+## 5. Diretrizes Normativas: Petrobras N-0038 (Drenagem On-Site) {#diretrizes-normativas-petrobras-n-0038-drenagem-on-site}
+
+As ferramentas presentes na pasta Automacoes_Solidos seguem rigorosamente os critérios geométricos e de vazão exigidos pela **Norma Técnica Petrobras N-0038 (Projeto de Drenagem de Áreas Industriais)**.
+
+### 5.1. Dimensionamento Hidráulico e Escoamento Superficial {#dimensionamento-hidráulico-e-escoamento-superficial}
+
+O escoamento em canaletas e dispositivos de drenagem aberta baseia-se na Fórmula de Manning:
+
+![](media/image5.png){width="6.458333333333333in" height="0.5750568678915136in"}Onde:
+
+- ![](media/image1.png){width="0.17252624671916011in" height="0.26386373578302713in"} é a velocidade média do escoamento (![](media/image2.png){width="0.3959962817147856in" height="0.2709448818897638in"}).
+
+- ![](media/image7.png){width="0.12858158355205598in" height="0.2785925196850394in"} é o coeficiente de rugosidade de Manning do material (concreto liso ![](media/image4.png){width="0.9023436132983377in" height="0.269666447944007in"}).
+
+- ![](media/image13.png){width="0.25976596675415575in" height="0.2701563867016623in"} é o raio hidráulico (![](media/image12.png){width="0.18815069991251093in" height="0.27177384076990374in"}), calculado como a razão entre a área molhada (![](media/image9.png){width="0.16080708661417323in" height="0.2787325021872266in"}) e o perímetro molhado (![](media/image11.png){width="0.1673173665791776in" height="0.2718908573928259in"}): ![](media/image3.png){width="0.7137040682414698in" height="0.26893153980752404in"}.
+
+- ![](media/image6.png){width="0.14371719160104987in" height="0.26690398075240596in"} é a declividade longitudinal de fundo da canaleta (![](media/image10.png){width="0.48356189851268594in" height="0.27331692913385824in"}).
+
+### 5.2. Mapeamento de Vazão para Combate a Incêndio {#mapeamento-de-vazão-para-combate-a-incêndio}
+
+O cálculo para prevenção de transbordamento industrial integra a contribuição pluvial com a carga hidráulica projetada para resfriamento e combate a incêndio:
+
+![](media/image8.png){width="6.458333333333333in" height="0.48026793525809275in"}As rotinas do plugin inserem estes metadados diretamente nos PropertySets das estruturas de descargas de bacias, permitindo auditorias geométricas e hidráulicas em tempo real.
+
+## 6. Guia de Manutenção e Migração Multi-versão (2025 ➔ 2026+) {#guia-de-manutenção-e-migração-multi-versão-2025-2026}
+
+O projeto adota compilação condicional para suportar múltiplos SDKs anuais da Autodesk sem duplicar código-fonte.
+
+### 6.1. Condicionamento Automatizado do Arquivo .csproj {#condicionamento-automatizado-do-arquivo-.csproj}
+
+\<Project Sdk=\"Microsoft.NET.Sdk\"\>\
+\<PropertyGroup\>\
+\<TargetFramework\>net8.0-windows7.0\</TargetFramework\>\
+\<UseWpf\>true\</UseWpf\>\
+\<UseWindowsForms\>true\</UseWindowsForms\>\
+\<Platforms\>x64\</Platforms\>\
+\<Configurations\>Debug2025;Release2025;Debug2026;Release2026\</Configurations\>\
+\</PropertyGroup\>\
+\
+\<!\-- Constantes de Compilação Condicional \--\>\
+\<PropertyGroup Condition=\"\'\$(Configuration)\' == \'Debug2025\' Or \'\$(Configuration)\' == \'Release2025\'\"\>\
+\<DefineConstants\>CIVIL3D_2025\</DefineConstants\>\
+\<AcadDir\>C:\Program Files\Autodesk\AutoCAD 2025\</AcadDir\>\
+\</PropertyGroup\>\
+\<PropertyGroup Condition=\"\'\$(Configuration)\' == \'Debug2026\' Or \'\$(Configuration)\' == \'Release2026\'\"\>\
+\<DefineConstants\>CIVIL3D_2026\</DefineConstants\>\
+\<AcadDir\>C:\Program Files\Autodesk\AutoCAD 2026\</AcadDir\>\
+\</PropertyGroup\>\
+\
+\<!\-- Referências do SDK Autodesk 2025 \--\>\
+\<ItemGroup Condition=\"\'\$(Configuration)\' == \'Debug2025\' Or \'\$(Configuration)\' == \'Release2025\'\"\>\
+\<Reference Include=\"AcCoreMgd\"\>\<HintPath\>\$(AcadDir)\AcCoreMgd.dll\</HintPath\>\<Private\>False\</Private\>\</Reference\>\
+\<Reference Include=\"AcDbMgd\"\>\<HintPath\>\$(AcadDir)\AcDbMgd.dll\</HintPath\>\<Private\>False\</Private\>\</Reference\>\
+\<Reference Include=\"AcMgd\"\>\<HintPath\>\$(AcadDir)\AcMgd.dll\</HintPath\>\<Private\>False\</Private\>\</Reference\>\
+\<Reference Include=\"AeccDbMgd\"\>\<HintPath\>\$(AcadDir)\AeccDbMgd.dll\</HintPath\>\<Private\>False\</Private\>\</Reference\>\
+\<Reference Include=\"AecBaseMgd\"\>\<HintPath\>\$(AcadDir)\AecBaseMgd.dll\</HintPath\>\<Private\>False\</Private\>\</Reference\>\
+\<Reference Include=\"AecPropDataMgd\"\>\<HintPath\>\$(AcadDir)\AecPropDataMgd.dll\</HintPath\>\<Private\>False\</Private\>\</Reference\>\
+\<Reference Include=\"AecModelerMgd\"\>\<HintPath\>\$(AcadDir)\AecModelerMgd.dll\</HintPath\>\<Private\>False\</Private\>\</Reference\>\
+\</ItemGroup\>\
+\
+\<!\-- Referências do SDK Autodesk 2026 \--\>\
+\<ItemGroup Condition=\"\'\$(Configuration)\' == \'Debug2026\' Or \'\$(Configuration)\' == \'Release2026\'\"\>\
+\<Reference Include=\"AcCoreMgd\"\>\<HintPath\>\$(AcadDir)\AcCoreMgd.dll\</HintPath\>\<Private\>False\</Private\>\</Reference\>\
+\<Reference Include=\"AcDbMgd\"\>\<HintPath\>\$(AcadDir)\AcDbMgd.dll\</HintPath\>\<Private\>False\</Private\>\</Reference\>\
+\<Reference Include=\"AcMgd\"\>\<HintPath\>\$(AcadDir)\AcMgd.dll\</HintPath\>\<Private\>False\</Private\>\</Reference\>\
+\<Reference Include=\"AeccDbMgd\"\>\<HintPath\>\$(AcadDir)\AeccDbMgd.dll\</HintPath\>\<Private\>False\</Private\>\</Reference\>\
+\<Reference Include=\"AecBaseMgd\"\>\<HintPath\>\$(AcadDir)\AecBaseMgd.dll\</HintPath\>\<Private\>False\</Private\>\</Reference\>\
+\<Reference Include=\"AecPropDataMgd\"\>\<HintPath\>\$(AcadDir)\AecPropDataMgd.dll\</HintPath\>\<Private\>False\</Private\>\</Reference\>\
+\<Reference Include=\"AecModelerMgd\"\>\<HintPath\>\$(AcadDir)\AecModelerMgd.dll\</HintPath\>\<Private\>False\</Private\>\</Reference\>\
+\</ItemGroup\>\
+\</Project\>
+
+### 6.2. Compatibilização do Manifesto do Pacote (PackageContents.xml) {#compatibilização-do-manifesto-do-pacote-packagecontents.xml}
+
+\<?xml version=\"1.0\" encoding=\"utf-8\"?\>\
+\<ApplicationPackage SchemaVersion=\"1.0\" Version=\"2026.1.0\" Name=\"ERGE Civil 3D Plugin\" AppCode=\"ERGE.Civil3D\"\>\
+\<RuntimeRequirements SeriesMin=\"R25.0\" SeriesMax=\"R26.0\" Platform=\"AutoCAD\*\" /\>\
+\<Components\>\
+\<RuntimeEntry OS=\"Win64\" Platform=\"Civil3D\" SeriesMin=\"R25.0\" SeriesMax=\"R26.0\" AppName=\"AutomacoesCivil3D\" ModuleName=\"./Contents/AutomacoesCivil3D.dll\" /\>\
+\</Components\>\
+\</ApplicationPackage\>
+
+## 7. Pipeline de Build, Compilação e Deploy Automático {#pipeline-de-build-compilação-e-deploy-automático}
+
+### 7.1. Compilação via Linha de Comando (CLI) {#compilação-via-linha-de-comando-cli}
+
+\# Executa compilação para Civil 3D 2026 em modo de Depuração (Debug)\
+dotnet build AutomacoesCivil3D.csproj -c Debug2026 -p:Platform=x64\
+\
+\# Executa compilação para Civil 3D 2026 em modo de Produção (Release)\
+dotnet build AutomacoesCivil3D.csproj -c Release2026 -p:Platform=x64
+
+### 7.2. Deploy de Teste Automatizado (Post-Build Target) {#deploy-de-teste-automatizado-post-build-target}
+
+O arquivo .csproj inclui uma tarefa pós-compilação para cópia direta dos assemblies para o ambiente Autoloader local do desenvolvedor:
+
+\<Target Name=\"DeployAutomacoesPetrobrasBundle\" AfterTargets=\"Build\" Condition=\"\'\$(Configuration)\' == \'Debug2025\' Or \'\$(Configuration)\' == \'Debug2026\'\"\>\
+\<PropertyGroup\>\
+\<BundleFolder\>\$(APPDATA)\Autodesk\ApplicationPlugins\AutomacoesPetrobras.bundle\Contents\\/BundleFolder\>\
+\</PropertyGroup\>\
+\<ItemGroup\>\
+\<OutputFiles Include=\"\$(OutputPath)\\\*\\.\*\" /\>\
+\</ItemGroup\>\
+\<Copy SourceFiles=\"@(OutputFiles)\" DestinationFiles=\"@(OutputFiles-\>\'\$(BundleFolder)%(RecursiveDir)%(Filename)%(Extension)\')\" SkipUnchangedFiles=\"true\" /\>\
+\</Target\>
+
+## 8. Segurança de Código, Ofuscação e Distribuição {#segurança-de-código-ofuscação-e-distribuição}
+
+A proteção de propriedade intelectual é crucial na entrega técnica comercial de rotinas de quantitativos e dimensionamento.
+
+\[Código C# Compilado (Release)\]\
+│\
+▼\
+┌─────────────────┐\
+│ .NET Reactor │ ◄─── (Ofuscação de Fluxo de Controle e Criptografia de Strings)\
+└────────┬────────┘\
+│\
+▼\
+┌─────────────────┐\
+│ Assinatura │ ◄─── (Prevenção de bloqueios de segurança e alertas no AutoCAD)\
+│ Digital (Sign) │\
+└────────┬────────┘\
+│\
+▼\
+┌─────────────────┐\
+│ Inno Setup 6 │ ◄─── (Geração do Instalador Executável Unificado .exe)\
+└─────────────────┘
+
+## 9. Empacotamento e Geração do Instalador (Inno Setup) {#empacotamento-e-geração-do-instalador-inno-setup}
+
+O Inno Setup reconstrói a estrutura oficial do formato .bundle sob a pasta oficial de plugins do AutoCAD para garantir que nenhum script de registro local seja exigido.
+
+### 9.1. Estrutura de Distribuição de Arquivos {#estrutura-de-distribuição-de-arquivos}
+
+%APPDATA%\Autodesk\ApplicationPlugins\ERGE.Civil3D.bundle\\
+
+- PackageContents.xml (Manifesto principal)
+
+- Contents/
+
+  - AutomacoesCivil3D.dll (Ofuscado e Assinado)
+
+  - Dependências (Xbim, ClosedXML, EPPlus, etc.)
+
+- Resources/
+
+  - Templates .dwt
+
+  - Folhas de estilo .xsl para relatórios
+
+  - Arquivos de Ribbon .cuix
+
+### 9.2. Script Completo do Inno Setup (erge-plugin-installer.iss) {#script-completo-do-inno-setup-erge-plugin-installer.iss}
+
+\[Setup\]\
+AppName=ERGE Civil 3D Plugin\
+AppVersion=2026.1.0\
+AppPublisher=ERGE Petrobras Tech Team\
+DefaultDirName={userappdata}\Autodesk\ApplicationPlugins\ERGE.Civil3D.bundle\
+DisableDirPage=yes\
+OutputBaseFilename=Setup_ERGE_Civil3D_2026\
+Compression=lzma\
+SolidCompression=yes\
+ArchitecturesInstallIn64BitMode=x64\
+\
+\[Files\]\
+; Manifesto do Pacote Autoloader\
+Source: \"..\bundle\PackageContents.xml\"; DestDir: \"{app}\"; Flags: ignoreversion\
+\
+; DLLs Principais e Dependências NuGet (Contents)\
+Source: \"..\bin\Release2026\Contents\\\"; DestDir: \"{app}\Contents\"; Flags: ignoreversion recursesubdirs\
+\
+; Arquivos de Apoio, Templates de Desenho e Ícones\
+Source: \"..\bundle\Resources\\\"; DestDir: \"{app}\Resources\"; Flags: ignoreversion recursesubdirs\
+\
+\[Code\]\
+// Verifica se o Civil 3D 2025 está instalado no sistema\
+function IsCivil3D2025Installed(): Boolean;\
+begin\
+Result := RegKeyExists(HKEY_LOCAL_MACHINE, \'SOFTWARE\Autodesk\AutoCAD\R25.0\ACAD-8100:409\');\
+end;\
+\
+// Verifica se o Civil 3D 2026 está instalado no sistema\
+function IsCivil3D2026Installed(): Boolean;\
+begin\
+Result := RegKeyExists(HKEY_LOCAL_MACHINE, \'SOFTWARE\Autodesk\AutoCAD\R26.0\ACAD-9100:409\');\
+end;\
+\
+// Evento disparado no início da execução do instalador\
+function InitializeSetup(): Boolean;\
+begin\
+Result := true;\
+if not (IsCivil3D2025Installed() or IsCivil3D2026Installed()) then\
+begin\
+MsgBox(\'Aviso: Não foi detectada nenhuma instalação oficial do Autodesk Civil 3D (2025 ou 2026) neste computador.\' + \#13#10 +\
+\'O plugin será instalado, mas pode não funcionar até que um ambiente compatível seja configurado.\', mbInformation, MB_OK);\
+end;\
 end;
-
-function IsCivil3D2026Installed(): Boolean;
-begin
-  Result := RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\Autodesk\AutoCAD\R26.0\ACAD-9100:409');
-end;
-
-function InitializeSetup(): Boolean;
-begin
-  Result := true;
-  if not (IsCivil3D2025Installed() or IsCivil3D2026Installed()) then
-    MsgBox('Aviso: nenhuma instalação do Autodesk Civil 3D (2025 ou 2026) foi detectada.' + #13#10 +
-           'O plugin será instalado, mas pode não funcionar até um ambiente compatível ser configurado.',
-           mbInformation, MB_OK);
-end;
-```
-
-### 10.3. Automação via MSBuild (Post-Build Event)
-
-Para integrar a geração do instalador ao build de produção (`Release`):
-
-```
-"C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "$(ProjectDir)installer\erge-plugin-installer.iss"
-```
